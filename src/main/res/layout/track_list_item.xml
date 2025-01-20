@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/activated_background"
-    android:padding="8dp">
+    android:paddingTop="8dp"
+    android:paddingHorizontal="8dp">
 
     <!-- Icon -->
     <ImageView
@@ -26,6 +27,7 @@
         android:layout_marginStart="8dp"
         android:singleLine="true"
         app:layout_constraintStart_toEndOf="@id/track_list_item_icon"
+        app:layout_constraintEnd_toStartOf="@id/track_list_item_date"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Main Text" />
 

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -67,7 +68,7 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
     public static final String EXTENDED_DATA_TYPE_DISTANCE = "distance";
     public static final String EXTENDED_DATA_TYPE_CADENCE = "cadence";
-    public static final String EXTENDED_DATA_TYPE_HEART_RATE = "heart_rate";
+    public static final String EXTENDED_DATA_TYPE_HEARTRATE = "heartrate";
     public static final String EXTENDED_DATA_TYPE_POWER = "power";
     public static final String EXTENDED_DATA_TYPE_ALTITUDE_GAIN = "elevation_gain";
     public static final String EXTENDED_DATA_TYPE_ALTITUDE_LOSS = "elevation_loss";
@@ -252,7 +253,7 @@ public class KMLTrackExporter implements TrackExporter {
         writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
         writeSimpleArrayStyle(EXTENDED_DATA_TYPE_POWER, context.getString(R.string.description_sensor_power));
         writeSimpleArrayStyle(EXTENDED_DATA_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
-        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
+        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEARTRATE, context.getString(R.string.description_sensor_heart_rate));
 
         printWriter.println("</Schema>");
     }
@@ -274,7 +275,7 @@ public class KMLTrackExporter implements TrackExporter {
             float heading = getHeading(marker.getTrackId(), marker.getLocation());
             writePhotoOverlay(marker, heading, zoneOffset);
         } else {
-            writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation(), zoneOffset);
+            writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation(), marker.getTime(), zoneOffset);
         }
     }
 
@@ -347,7 +348,7 @@ public class KMLTrackExporter implements TrackExporter {
             writeSimpleArraySensorData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
         }
         if (heartRateList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArraySensorData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
+            writeSimpleArraySensorData(heartRateList, EXTENDED_DATA_TYPE_HEARTRATE);
         }
         if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
             writeSimpleArraySensorData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
@@ -368,7 +369,7 @@ public class KMLTrackExporter implements TrackExporter {
 
     @VisibleForTesting
     void writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint) {
-        printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
+        printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getTime()) + "</when>");
 
         trackpointTypeList.add(trackPoint.getType());
 
@@ -411,12 +412,12 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("</SimpleArrayData>");
     }
 
-    private void writePlacemark(String name, String activityType, String description, Location location, ZoneOffset zoneOffset) {
+    private void writePlacemark(String name, String activityType, String description, Location location, Instant time, ZoneOffset zoneOffset) {
         if (location != null) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
-            printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, location) + "</when></TimeStamp>");
+            printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, time) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + KMLTrackExporter.MARKER_STYLE + "</styleUrl>");
             writeTypeLocalized(activityType);
             printWriter.println("<Point>");
@@ -437,7 +438,7 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.print("<heading>" + heading + "</heading>");
         printWriter.print("<tilt>90</tilt>");
         printWriter.println("</Camera>");
-        printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, marker.getLocation()) + "</when></TimeStamp>");
+        printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, marker.getTime()) + "</when></TimeStamp>");
         printWriter.println("<styleUrl>#" + MARKER_STYLE + "</styleUrl>");
         writeTypeLocalized(marker.getCategory());
 
@@ -460,14 +461,13 @@ public class KMLTrackExporter implements TrackExporter {
 
     /**
      * Returns the formatted time of the location; either absolute or relative depending exportTrackDetail.
-     *
-     * @param location the location
      */
-    private String getTime(ZoneOffset zoneOffset, Location location) {
-        return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime()), zoneOffset);
+    private String getTime(ZoneOffset zoneOffset, Instant instant) {
+        return StringUtils.formatDateTimeIso8601(instant, zoneOffset);
     }
 
     /**
+     * TODO: check if this is a useful feature (likely not).
      * Gets the heading to a location.
      *
      * @param trackId  the track id containing the location
@@ -480,7 +480,10 @@ public class KMLTrackExporter implements TrackExporter {
         }
         TrackPoint viewLocation = contentProviderUtils.getLastValidTrackPoint(trackId);
         if (viewLocation != null) {
-            return viewLocation.bearingTo(location);
+            Optional<Float> bearing = viewLocation.bearingTo(location);
+            if (bearing.isPresent()) {
+                return bearing.get();
+            }
         }
 
         return location.getBearing();
@@ -495,7 +498,7 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
     private void writeTypeLocalized(String localizedValue) {
-        if (localizedValue == null || localizedValue.equals("")) {
+        if (localizedValue == null || localizedValue.isEmpty()) {
             return;
         }
         printWriter.println("<ExtendedData>");

@@ -316,7 +316,7 @@
         <item quantity="other">Completado con %1$d errores</item>
     </plurals>
     <string name="import_thread_interrupted">Hilo interrumpido</string>
-    <string name="import_no_kml_file_found">No se ha encontrado ningún archivo doc.kml en KMZ</string>
+    <string name="import_no_kml_file_found">No se ha encontrado ningún archivo kml en KMZ</string>
     <string name="sensor_state_power_avg">Potencia promedio</string>
     <string name="sensor_could_not_scan">No se pudieron buscar dispositivos Bluetooth (error %1$i).</string>
     <string name="settings_prevent_reimport_tracks_title">Evitar reimportar los recorridos</string>
@@ -431,9 +431,9 @@
     <string name="generic_yesterday">Ayer</string>
     <string name="menu_filter">Filtrar</string>
     <string name="settings_ui_summary">Apariencia, Diseño de grabación, Tema</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Intervalo de tiempo, Intervalo de distancia, Distancia máxima, Precisión</string>
-    <string name="settings_sensors_title">Sensores Bluetooth</string>
+    <string name="settings_sensors_title">Sensores</string>
     <string name="settings_sensors_summary">Sensores de ciclismo, Circunferencia de la rueda, Sensores de carrera</string>
     <string name="settings_export_section">Exportar</string>
     <string name="activity_type_swimming">Natación</string>
@@ -450,7 +450,6 @@
     <string name="gps_recording_without_signal">OpenTracks está grabando sin datos GPS.</string>
     <string name="menu_add_custom_layout">Nuevo diseño</string>
     <string name="permission_bluetooth_failed_rejected">Es necesario conceder manualmente a OpenTracks el acceso a los Dispositivos Cercanos en la configuración del sistema.</string>
-    <string name="settings_open_tracks_summary">Todo sobre el proyecto OpenTracks</string>
     <string name="settings_activity_defaults_category">Prederminados de la actividad</string>
     <string name="settings_reset_summary">Restablecer a valores predeterminados</string>
     <string name="custom_layout_list_title">Diseños</string>

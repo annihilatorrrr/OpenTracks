@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/settings_ui_title">
 
+    <de.dennisguse.opentracks.settings.LocalePreference
+        android:key="@string/locale_key"
+        android:persistent="false"
+        android:title="@string/settings_locale_title"
+        app:useSimpleSummaryProvider="true" />
+
     <ListPreference
         android:defaultValue="@string/night_mode_default"
         android:entries="@array/night_mode_options"
@@ -17,12 +23,6 @@
         android:key="@string/settings_ui_dynamic_colors_key"
         android:summary="@string/settings_ui_dynamic_colors_summary"
         android:title="@string/settings_ui_dynamic_colors_title" />
-
-    <ListPreference
-        android:defaultValue="@string/show_on_map_format_ask"
-        android:key="@string/show_on_map_format_key"
-        android:title="@string/select_show_on_map_behavior"
-        app:useSimpleSummaryProvider="true" />
 
     <PreferenceCategory app:title="@string/settings_recording_title">
 

@@ -421,7 +421,7 @@ limitations under the License.
     <string name="generic_click_twice_cancel">Tühistamiseks vajutage uuesti tagasi</string>
     <string name="gps_disabled_msg">GPS keelatud</string>
     <string name="import_unsupported_format">Toetamata failivorming</string>
-    <string name="import_no_kml_file_found">doc.kml faili ei leitud KMZ-st</string>
+    <string name="import_no_kml_file_found">kml faili ei leitud KMZ-st</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_error_list_dialog_title">Faile pole imporditud</string>
     <string name="import_file_imported">Fail %1$s imporditud</string>
@@ -460,14 +460,13 @@ limitations under the License.
     <string name="settings_ui_title">Kasutajaliides</string>
     <string name="settings_ui_summary">Välimus, Salvestamise Paigutus, Teema</string>
     <string name="settings_gps_summary">Ajavahemik, vahemaa intervall, maksimaalne kaugus, täpsus</string>
-    <string name="settings_sensors_title">Bluetooth Andurid</string>
+    <string name="settings_sensors_title">Andurid</string>
     <string name="settings_announcements_statistics_title">Häälteated</string>
     <string name="settings_announcements_summary">Aeg, Kaugus, Hääle Kiirus</string>
     <string name="settings_units_category">Ühikud</string>
     <string name="settings_import_export_summary">Import, Eksport, Automaatne Eksport</string>
     <string name="settings_import_export_title">Import/Eksport</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_open_tracks_summary">Kõik OpenTracks Projekti Kohta</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_reset_summary">Lähtestage Seaded vaikeväärtustele</string>
     <string name="settings_recording_customize_layout_title">Kohandage oma salvestuspaigutust</string>
     <string name="settings_recording_customize_layout_select_columns">Andmeväljad rea kohta</string>

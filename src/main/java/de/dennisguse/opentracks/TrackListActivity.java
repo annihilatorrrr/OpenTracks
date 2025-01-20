@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -26,7 +25,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,12 +32,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -47,6 +45,7 @@ import java.util.Objects;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
+import de.dennisguse.opentracks.services.MissingPermissionException;
 import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -127,7 +126,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     };
 
     // Menu items
-    private MenuItem searchMenuItem;
 
     private String searchQuery;
 
@@ -159,7 +157,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 if (gpsStatusValue.isGpsStarted()) {
                     recordingStatusConnection.stopService(this);
                 } else {
-                    TrackRecordingServiceConnection.execute(this, (service, connection) -> service.tryStartSensors());
+                    startSensorsOrRecording((service, connection) -> service.tryStartSensors());
                 }
             }
         });
@@ -178,7 +176,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             // Not Recording -> Recording
             Log.i(TAG, "Starting recording");
             updateGpsMenuItem(false, true);
-            TrackRecordingServiceConnection.execute(this, (service, connection) -> {
+            startSensorsOrRecording((service, connection) -> {
                 Track.Id trackId = service.startNewTrack();
 
                 Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
@@ -192,7 +190,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             }
 
             // Recording -> Stop
-            ActivityUtils.vibrate(this, 1000);
+            ActivityUtils.vibrate(this, Duration.ofSeconds(1));
             updateGpsMenuItem(false, false);
             recordingStatusConnection.stopRecording(TrackListActivity.this);
             viewBinding.trackListFabAction.setImageResource(R.drawable.ic_baseline_record_24);
@@ -247,15 +245,20 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     @Override
     protected View getRootView() {
         viewBinding = TrackListBinding.inflate(getLayoutInflater());
+
+        viewBinding.trackListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            searchQuery = viewBinding.trackListSearchView.getEditText().getText().toString();
+            viewBinding.trackListSearchView.hide();
+            loadData();
+            return true;
+        });
+
         return viewBinding.getRoot();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.track_list, menu);
-
-        searchMenuItem = menu.findItem(R.id.track_list_search);
-        ActivityUtils.configureSearchWidget(this, searchMenuItem);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -278,70 +281,27 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         }
 
-        if (item.getItemId() == R.id.track_list_search) {
-            SearchView searchView = (SearchView) searchMenuItem.getActionView();
-            searchView.setIconified(false);
-            searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if (item.getItemId() == R.id.track_list_help) {
+            startActivity(IntentUtils.newIntent(this, HelpActivity.class));
             return true;
         }
 
-        if (item.getItemId() == R.id.track_list_help) {
-            startActivity(IntentUtils.newIntent(this, HelpActivity.class));
+        if (item.getItemId() == R.id.track_list_about) {
+            startActivity(IntentUtils.newIntent(this, AboutActivity.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public void onBackPressed() {
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-        }
-
-        if (searchQuery != null) {
-            searchQuery = null;
-            loadData();
-            return;
-        }
-
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            searchQuery = intent.getStringExtra(SearchManager.QUERY);
-        } else {
-            searchQuery = null;
-        }
-    }
-
     private void loadData() {
+        viewBinding.trackListToolbar.setText(searchQuery);
+
         viewBinding.trackListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.app_name)));
 
         Cursor tracks = new ContentProviderUtils(this).searchTracks(searchQuery);
 
         adapter.swapData(tracks);
-
-        if (tracks.getCount() == 0) {
-            viewBinding.trackListEmptyView.setVisibility(View.VISIBLE);
-            viewBinding.trackList.setVisibility(View.GONE);
-        } else {
-            viewBinding.trackListEmptyView.setVisibility(View.GONE);
-            viewBinding.trackList.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -444,5 +404,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         recordingStatus = status;
         setFloatButton();
         adapter.updateRecordingStatus(recordingStatus);
+    }
+
+    private void startSensorsOrRecording(TrackRecordingServiceConnection.Callback callback) {
+        try {
+            TrackRecordingServiceConnection.executeForeground(this, callback);
+        } catch (MissingPermissionException e) {
+            Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show();
+        }
     }
 }

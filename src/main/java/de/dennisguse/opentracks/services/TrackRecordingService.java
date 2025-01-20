@@ -20,7 +20,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager.WakeLock;
@@ -37,6 +36,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Duration;
 
+import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
@@ -46,7 +46,6 @@ import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.PermissionRequester;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 public class TrackRecordingService extends Service implements TrackPointCreator.Callback, SharedPreferences.OnSharedPreferenceChangeListener, TrackRecordingManager.IdleObserver {
@@ -58,6 +57,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public static final RecordingStatus STATUS_DEFAULT = RecordingStatus.notRecording();
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
+
+    public TrackPoint getLastStoredTrackPointWithLocation() {
+        return trackRecordingManager.getLastStoredTrackPointWithLocation();
+    }
 
     public class Binder extends android.os.Binder {
 
@@ -213,12 +216,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            if (!PermissionRequester.RECORDING.hasPermission(this)) {
-                throw new RuntimeException("Android14: Please grant permissions LOCATION and NEARBY DEVICES (manually)");
-            }
-        }
-
         ServiceCompat.startForeground(this, TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
     }
 
@@ -246,6 +243,20 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         notificationManager.cancelNotification();
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
         gpsStatusObservable.postValue(STATUS_GPS_DEFAULT);
+    }
+
+    public Marker.Id createMarker() {
+        if (!isRecording()) {
+            return null;
+        }
+
+        //TODO This contains some duplication to TrackRecodingActivity's Marker creation
+        TrackPoint trackPoint = trackRecordingManager.getLastStoredTrackPointWithLocation();
+        if (trackPoint == null) {
+            return null;
+        }
+        Marker marker = new Marker(recordingStatus.trackId(), trackPoint);
+        return new ContentProviderUtils(this).insertMarker(marker);
     }
 
     @Override
@@ -277,14 +288,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable.postValue(gpsStatusValue);
     }
 
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
-        if (!isRecording()) {
-            return null;
-        }
-
-        return trackRecordingManager.insertMarker(name, category, description, photoUrl);
-    }
-
     @Deprecated
     @VisibleForTesting
     public TrackPointCreator getTrackPointCreator() {
@@ -314,7 +317,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Compute temporary track statistics using sensorData and update time.
         Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
 
-        voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
+        voiceAnnouncementManager.announceStatisticsIfNeeded(data.first, data.second.second);
 
         recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
     }

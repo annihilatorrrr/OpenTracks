@@ -390,7 +390,7 @@ limitations under the License.
     <string name="marker_add_photo_canceled">Đã hủy, không có dấu ảnh nào được thêm</string>
     <string name="generic_completed">Hoàn tất</string>
     <string name="export_progress_summary_errors_msg">Lỗi</string>
-    <string name="import_no_kml_file_found">Không tìm thấy tệp doc.kml nào trong KMZ</string>
+    <string name="import_no_kml_file_found">Không tìm thấy tệp kml nào trong KMZ</string>
     <string name="activity_type_escooter">xe scooter điện</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="other">Đã hoàn tất với %1$d lỗi</item>
@@ -472,13 +472,12 @@ limitations under the License.
     <string name="settings_units_category">Đơn vị đo</string>
     <string name="settings_gps_summary">Khoảng thời gian, Khoảng cách, Khoảng cách tối đa, Độ chính xác</string>
     <string name="settings_import_export_summary">Nhập, Xuất, Tự động xuất</string>
-    <string name="settings_open_tracks_summary">Tất Cả Về Dự Án OpenTracks</string>
     <string name="settings_defaults_title">Định Vị và các Hoạt động</string>
     <string name="settings_defaults_summary">Đơn vị ưu tiên, Hoạt động mặc định, Tên mặc định tuyến đường</string>
     <string name="settings_ui_title">Giao diện người dùng</string>
     <string name="settings_ui_summary">Vẻ ngoài, Bố cục ghi, Chủ đề</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_sensors_title">Cảm Biến Bluetooth</string>
+    <string name="settings_gps_sensor">GPS</string>
+    <string name="settings_sensors_title">Cảm Biến</string>
     <string name="settings_sensors_summary">Đi Xe Đạp Cảm Biến, Bánh Vòng, Chạy Bộ Cảm Biến</string>
     <string name="settings_announcements_statistics_title">Thông báo thống kê</string>
     <string name="settings_announcements_summary">Thời Gian, Khoảng Cách, Tốc Độ Giọng Nói</string>
@@ -535,7 +534,6 @@ limitations under the License.
     <string name="settings_announcements_average_speed_pace">Tốc độ trung bình/nhịp độ</string>
     <string name="settings_stats_units_nautical">Hải lý (dặm hải lý, ft)</string>
     <string name="settings_public_api_package_title">Tên gói cho API công khai</string>
-    <string name="select_show_on_map_behavior">Chọn hành vi \"hiện trên bản đồ\"</string>
     <string name="settings_announcements_lap_speed_pace">Tốc độ vòng/nhịp độ</string>
     <string name="track_discarding">Đang bỏ đoạn đường</string>
     <string name="voice_per_nautical_mile">trên dặm hải lý</string>
@@ -549,7 +547,6 @@ limitations under the License.
     <string name="error_crash_title">%1$s đã dừng đột ngột</string>
     <string name="share_crash_report">Chia sẻ báo cáo dừng đột ngột</string>
     <string name="report_bug">Báo cáo lỗi</string>
-    <string name="show_on_map_format_ask">Hỏi</string>
     <string name="show_on_dashboard">API Bảng điều khiển OpenTracks</string>
     <string name="always">Luôn luôn</string>
     <string name="track_delete_number_of_tracks">%1$d tuyến đường</string>

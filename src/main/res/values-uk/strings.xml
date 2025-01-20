@@ -175,7 +175,7 @@ limitations under the License.
     <string name="settings_chart_by_distance">Дистанція</string>
     <string name="settings_chart_by_time">Час</string>
     <string name="settings_recording_default_activity_title">Тип за умовчанням</string>
-    <string name="settings_recording_location_frequency_summary">Записувати відрізок через кожні %1$s</string>
+    <string name="settings_recording_location_frequency_summary">%1$s між перевірками місцезнаходження</string>
     <string name="settings_recording_max_recording_distance_summary">Кожні %1$s шляху відміряється новий відрізок</string>
     <string name="settings_recording_max_recording_distance_title">Максимальна відстань</string>
     <string name="settings_recording_min_recording_distance_title">Відстань відрізка</string>
@@ -326,8 +326,8 @@ limitations under the License.
 \n d) вимкніть енергоощадження.
 \n
 \n Якщо нічого не допомагає, будь ласка, повідомте нам про помилку. </string>
-    <string name="about_preference_title">Про OpenTracks</string>
-    <string name="about_url">Веб-сторінка проєкту: <a href="%1$s">%1$s</a></string>
+    <string name="about_preference_title">Про</string>
+    <string name="about_url">Веб-сторінка проекту: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Версія: %1$s</string>
     <string name="about_version_code">Код версії: %1$d</string>
     <string name="about_libraries">Бібліотеки</string>
@@ -371,7 +371,7 @@ limitations under the License.
     <string name="import_thread_interrupted">Поток перервано</string>
     <string name="import_unsupported_format">Формат файлу не підтримується</string>
     <string name="import_parser_error">Помилка парсера: %1$s</string>
-    <string name="import_no_kml_file_found">Файл doc.kml не знайдено в KMZ</string>
+    <string name="import_no_kml_file_found">Файл kml не знайдено в KMZ</string>
     <string name="import_error_list_dialog_title">Файли не імпортовано</string>
     <string name="import_error_info">%1$s:%2$s</string>
     <string name="marker_add_photo_canceled">Скасовано, фото-маркування не додано</string>
@@ -459,14 +459,14 @@ limitations under the License.
     <string name="settings_units_category">Одиниця</string>
     <string name="settings_import_export_summary">Імпорт, Експорт, Автоэкспорт</string>
     <string name="settings_announcements_summary">Час, відстань, швидкість передачі голосу</string>
-    <string name="settings_import_export_title">Імпорт/Експорт</string>
+    <string name="settings_import_export_title">Імпорт та експорт</string>
     <string name="settings_recording_customize_layout_title">Налаштуйте свій макет запису</string>
     <string name="stats_custom_layout_default_layout">Макет за замовчуванням</string>
     <string name="custom_layout_select_layout">Виберіть макет</string>
     <string name="custom_layout_list_layout_removed">Макет був видалений</string>
     <string name="custom_layout_list_edit_already_exists">Ім\'я макета вже існує</string>
     <string name="custom_layout_list_edit_name">Введіть ім\'я макета для додавання</string>
-    <string name="settings_announcements_distance_frequency">Інтервал відстаней</string>
+    <string name="settings_announcements_distance_frequency">Довжина кола</string>
     <string name="settings_announcements_totaltime_frequency">Часовий інтервал</string>
     <string name="settings_running_sensor">Рухомий</string>
     <string name="settings_generic_sensor">Загальний</string>
@@ -476,11 +476,10 @@ limitations under the License.
     <string name="stats_sensors_cadence">Каденція</string>
     <string name="stats_sensors_heart_rate">Частота серцебиття</string>
     <string name="settings_defaults_summary">Переважні одиниці виміру, активність за замовчуванням, Ім\'я треку за замовчуванням</string>
-    <string name="settings_open_tracks_summary">Все про проект OpenTracks</string>
     <string name="settings_defaults_title">Одиниці виміру і дії за замовчуванням</string>
     <string name="settings_ui_title">Інтерфейс користувача</string>
     <string name="settings_ui_summary">Зовнішній вигляд, Макет запису, Тема</string>
-    <string name="settings_sensors_title">Датчики Bluetooth</string>
+    <string name="settings_sensors_title">Датчики</string>
     <string name="settings_announcements_statistics_title">Голосові оголошення</string>
     <string name="settings_gps_summary">Інтервал часу, інтервал відстані, Максимальна відстань, точність</string>
     <string name="settings_sensors_summary">Датчики Їзди На Велосипеді, Окружність Колеса, Датчики Ходу</string>
@@ -504,7 +503,7 @@ limitations under the License.
     <string name="value_float_mile_hour">%1$.1f km/h</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="no_compatible_file_manager_installed">Не встановлено сумісний файловий менеджер</string>
     <string name="help_data_google_play_services_content">Ні</string>
     <string name="activity_type_workout">тренування</string>
@@ -557,8 +556,6 @@ limitations under the License.
     <string name="no_compatible_camera_installed">Не встановлено сумісну програму камери</string>
     <string name="no_compatible_gallery_installed">Не встановлено сумісну програму галереї зображень</string>
     <string name="report_bug">Повідомити про помилку</string>
-    <string name="select_show_on_map_behavior">Виберіть поведінку \"показати на карті\"</string>
-    <string name="show_on_map_format_ask">Запитувати</string>
     <string name="voice_per_nautical_mile">за морську милю</string>
     <string name="always">Завжди</string>
     <string name="value_integer_knots">%1$d вузлів</string>
@@ -570,4 +567,5 @@ limitations under the License.
     <string name="show_on_dashboard_not_installed">Не встановлено програму, що підтримує OpenTracks Dashboard API.</string>
     <string name="value_float_knots_recommended">%1$.1f вузлів (рекомендовано)</string>
     <string name="sensor_state_power_max">Макс. потужність</string>
+    <string name="power">Сила</string>
 </resources>

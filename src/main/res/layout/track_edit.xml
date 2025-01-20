@@ -21,7 +21,7 @@ limitations under the License.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/m3_bottom_nav_min_height">
+        android:fitsSystemWindows="true">
 
         <include
             android:id="@+id/fields"
@@ -45,9 +45,5 @@ limitations under the License.
         </LinearLayout>
 
     </LinearLayout>
-
-    <include
-        android:id="@+id/bottom_app_bar_layout"
-        layout="@layout/bottomappbar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

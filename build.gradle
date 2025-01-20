@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'
+        classpath 'com.android.tools.build:gradle:8.8.0'
     }
 }
 
@@ -26,7 +26,7 @@ def getVersionName = { ->
         }
         return stdout.toString().trim()
     } catch (ignored) {
-        return null
+        throw new GradleException('VersionName could not be read:' + ignored.message)
     }
 }
 
@@ -39,7 +39,7 @@ def getVersionCode = { ->
         }
         return Integer.valueOf(stdout.toString().trim())
     } catch (ignored) {
-        return null
+        throw new GradleException('VersionCode could not be read:' + ignored.message)
     }
 }
 
@@ -51,7 +51,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    compileSdk 34
+    compileSdk 35
 
     buildFeatures {
         viewBinding true
@@ -63,25 +63,33 @@ android {
     }
 
     defaultConfig {
-        applicationId "de.dennisguse.opentracks"
-        versionCode 5641
-        versionName "v4.11.0"
+        applicationId 'de.dennisguse.opentracks'
+        versionCode 6022
+        versionName "v4.17.6"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
         minSdk 26
-        targetSdk 34
+        targetSdk 35
 
-        testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
+        testInstrumentationRunner 'de.dennisguse.opentracks.TestRunner'
         testInstrumentationRunnerArguments clearPackageData: 'true'
     }
     signingConfigs {
         nightly {
-            if (System.getProperty("nightly_store_file") != null) {
-                storeFile file(System.getProperty("nightly_store_file"))
-                storePassword System.getProperty("nightly_store_password")
-                keyAlias System.getProperty("nightly_key_alias")
-                keyPassword System.getProperty("nightly_key_password")
+            if (System.getProperty('nightly_store_file') != null) {
+                storeFile file(System.getProperty('nightly_store_file'))
+                storePassword System.getProperty('nightly_store_password')
+                keyAlias System.getProperty('nightly_key_alias')
+                keyPassword System.getProperty('nightly_key_password')
+            }
+        }
+        release {
+            if (System.getProperty("release_store_file") != null) {
+                storeFile file(System.getProperty("release_store_file"))
+                storePassword System.getProperty("release_store_password")
+                keyAlias System.getProperty("release_key_alias")
+                keyPassword System.getProperty("release_key_password")
             }
         }
     }
@@ -90,59 +98,85 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
         }
-
-        nightly {
-            signingConfig signingConfigs.nightly
-            applicationIdSuffix ".nightly"
-        }
-
         release {
             crunchPngs false
             minifyEnabled false
         }
+    }
 
-        releasePlayStore {
-            applicationIdSuffix ".playstore"
-            versionNameSuffix "-PlayStore"
-            signingConfig signingConfigs.debug
+
+    flavorDimensions 'version'
+    productFlavors {
+        nightly {
+            dimension 'version'
+            applicationId 'de.dennisguse.opentracks.nightly'
+            signingConfig signingConfigs.nightly
+        }
+        irreproducible {
+            // Non-reproducible: https://f-droid.org/de/packages/de.dennisguse.opentracks/
+            dimension 'version'
+            applicationId 'de.dennisguse.opentracks'
+            versionNameSuffix 'irreproducible'
+        }
+        reproducible {
+            // Developer Binaries: https://github.com/OpenTracksApp/OSMDashboard/releases/download/v%v/de.dennisguse.opentracks.playstore_%v.apk
+            // FDroid: https://f-droid.org/de/packages/de.dennisguse.opentracks.playstore
+            // PlayStore: https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore
+            dimension 'version'
+            applicationId 'de.dennisguse.opentracks.playstore'
+            signingConfig signingConfigs.release
         }
     }
 
     applicationVariants.configureEach { variant ->
-        variant.resValue "string", "applicationId", variant.applicationId
+        variant.resValue 'string', 'applicationId', variant.applicationId
 
-        if (variant.buildType.name == 'nightly') {
-            variant.outputs.configureEach {
+        variant.outputs.configureEach {
+            if (variant.flavorName == 'nightly') {
                 setVersionCodeOverride(getVersionCode())
                 setVersionNameOverride(getVersionName())
+            }
+
+            if (variant.flavorName == 'reproducible') {
+                outputFileName = "${applicationId}_${variant.versionName}.apk"
+            } else {
                 outputFileName = "${applicationId}_${variant.versionCode}.apk"
             }
         }
     }
+
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.documentfile:documentfile:1.0.1'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.core:core:1.12.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.core:core:1.15.0'
     implementation 'androidx.core:core-splashscreen:1.0.1'
-    implementation 'androidx.mediarouter:mediarouter:1.6.0'
+    implementation 'androidx.mediarouter:mediarouter:1.7.0'
+    implementation 'androidx.core:core-location-altitude:1.0.0-alpha03'
 
-    androidTestImplementation 'androidx.test:core:1.5.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'org.mockito:mockito-android:5.10.0'
+    androidTestImplementation 'androidx.test:core:1.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'org.mockito:mockito-android:5.15.2'
 
-    androidTestUtil 'androidx.test:orchestrator:1.4.2'
+    androidTestUtil 'androidx.test:orchestrator:1.5.1'
 }

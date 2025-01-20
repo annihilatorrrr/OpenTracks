@@ -41,9 +41,9 @@ import androidx.core.view.GestureDetectorCompat;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Iterator;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
@@ -152,31 +152,6 @@ public class ChartView extends View {
             return true;
         }
 
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent event) {
-            // Check if the y event is within markerHeight of the marker center
-            if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
-                int minDistance = Integer.MAX_VALUE;
-                Marker nearestMarker = null;
-                synchronized (markers) {
-                    for (Marker marker : markers) {
-                        int distance = Math.abs(getX(getMarkerXValue(marker)) - (int) event.getX() - getScrollX());
-                        if (distance < minDistance) {
-                            minDistance = distance;
-                            nearestMarker = marker;
-                        }
-                    }
-                }
-                if (nearestMarker != null && minDistance < markerWidth) {
-                    Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
-                            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestMarker.getId());
-                    getContext().startActivity(intent);
-                    return true;
-                }
-            }
-
-            return false;
-        }
     });
 
     private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -589,7 +564,6 @@ public class ChartView extends View {
 
             clipToGraphArea(canvas);
             drawDataSeries(canvas);
-            drawMarker(canvas);
             drawGrid(canvas);
 
             canvas.restore();
@@ -630,30 +604,6 @@ public class ChartView extends View {
         }
     }
 
-    private void drawMarker(Canvas canvas) {
-        synchronized (markers) {
-            for (Marker marker : markers) {
-                double xValue = getMarkerXValue(marker);
-                double markerIconSizeInXaxisUnits = maxX*markerWidth/effectiveWidth / zoomLevel;
-                if (xValue > maxX + markerIconSizeInXaxisUnits * (1-MARKER_X_ANCHOR)) {
-                    continue; // there is no chance that this marker will be visible
-                }
-                canvas.save();
-                float x = getX(getMarkerXValue(marker));
-                canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-                // if marker is not near the end of the track then draw it normally
-                if (xValue < maxX - markerIconSizeInXaxisUnits*(1-MARKER_X_ANCHOR)) {
-                    canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
-                } else { // marker at the end needs to be drawn mirrored so that it is more visible
-                    canvas.translate(x + (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
-                    canvas.scale(-1, 1);
-                }
-                markerPin.draw(canvas);
-                canvas.restore();
-            }
-        }
-    }
-
     /**
      * Draws the grid.
      *
@@ -679,12 +629,13 @@ public class ChartView extends View {
     private record TitlePosition(
             int line, // line number (starts at 1, top to bottom numbering)
             int xPos // x position in points (starts at 0, left to right indexing)
-    ) {};
+    ) {}
+
     private record TitleDimensions(
             int lineCount, // number of lines the titles will take
             int lineHeight, // height of a line (all lines have the same height)
             List<TitlePosition> titlePositions // positions of visible titles (the order corresponds to seriesList)
-    ) {};
+    ) {}
 
     /**
      * Draws series titles.
@@ -711,7 +662,7 @@ public class ChartView extends View {
     private TitleDimensions getTitleDimensions() {
         int lineCnt = 1;
         int lineHeight = 0;
-        List<TitlePosition> tps = new ArrayList<TitlePosition>();
+        List<TitlePosition> tps = new ArrayList<>();
         int xPosInLine = spacer;
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
@@ -1040,14 +991,6 @@ public class ChartView extends View {
         double percentage = (value - chartValueSeries.getMinMarkerValue()) / effectiveSpread;
         int rangeHeight = effectiveHeight - 2 * yAxisOffset;
         return topBorder + yAxisOffset + (int) ((1 - percentage) * rangeHeight);
-    }
-
-    private double getMarkerXValue(Marker marker) {
-        if (chartByDistance) {
-            return marker.getLength().toKM_Miles(unitSystem);
-        } else {
-            return marker.getDuration().toMillis();
-        }
     }
 
     /**

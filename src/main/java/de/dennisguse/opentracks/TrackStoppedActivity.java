@@ -111,15 +111,6 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        if (isDiscarding) {
-            return;
-        }
-        super.onBackPressed();
-        resumeTrackAndFinish();
-    }
-
-    @Override
     protected View getRootView() {
         viewBinding = TrackStoppedBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
@@ -136,7 +127,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     private void resumeTrackAndFinish() {
-        TrackRecordingServiceConnection.execute(this, (service, connection) -> {
+        TrackRecordingServiceConnection.executeForeground(this, (service, connection) -> {
             service.resumeTrack(trackId);
 
             Intent newIntent = IntentUtils.newIntent(TrackStoppedActivity.this, TrackRecordingActivity.class)

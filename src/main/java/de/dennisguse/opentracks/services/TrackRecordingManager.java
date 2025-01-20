@@ -1,10 +1,8 @@
 package de.dennisguse.opentracks.services;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
-import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
@@ -19,7 +17,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -138,31 +135,6 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         return new Pair<>(track, current);
     }
 
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
-        if (name == null) {
-            Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(trackId);
-            if (nextMarkerNumber == null) {
-                nextMarkerNumber = 1;
-            }
-            name = context.getString(R.string.marker_name_format, nextMarkerNumber + 1);
-        }
-
-        if (lastStoredTrackPointWithLocation == null) {
-            Log.i(TAG, "Could not create a marker as trackPoint is unknown.");
-            return null;
-        }
-
-        category = category != null ? category : "";
-        description = description != null ? description : "";
-        String icon = context.getString(R.string.marker_icon_url);
-        photoUrl = photoUrl != null ? photoUrl : "";
-
-        // Insert marker
-        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPointWithLocation, photoUrl);
-        Uri uri = contentProviderUtils.insertMarker(marker);
-        return new Marker.Id(ContentUris.parseId(uri));
-    }
-
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void onIdle() {
         Log.d(TAG, "Becoming idle");
@@ -197,6 +169,8 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
         if (trackPoint.hasLocation() && lastStoredTrackPointWithLocation == null) {
             insertTrackPoint(trackPoint, true);
+
+            scheduleNewIdleTimeout();
             return true;
         }
 
@@ -224,16 +198,14 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
             insertTrackPoint(trackPoint, true);
 
-            handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+            scheduleNewIdleTimeout();
             return true;
         }
 
         if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)) {
             insertTrackPoint(trackPoint, false);
 
-            handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+            scheduleNewIdleTimeout();
             return true;
         }
 
@@ -243,8 +215,17 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         return false;
     }
 
+    private void scheduleNewIdleTimeout() {
+        if (idleDuration.isZero()) {
+            Log.d(TAG, "idle functionality is disabled");
+            return;
+        }
+        handler.removeCallbacks(ON_IDLE);
+        handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+    }
+
     TrackStatistics getTrackStatistics() {
-        return trackStatisticsUpdater.getTrackStatistics();
+        return trackStatisticsUpdater == null ? null : trackStatisticsUpdater.getTrackStatistics();
     }
 
     private void insertTrackPoint(@NonNull TrackPoint trackPoint, boolean storeLastTrackPointIfUseful) {
@@ -303,6 +284,10 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         if (PreferencesUtils.isKey(R.string.idle_duration_key, key)) {
             idleDuration = PreferencesUtils.getIdleDurationTimeout();
         }
+    }
+
+    public TrackPoint getLastStoredTrackPointWithLocation() {
+        return lastStoredTrackPointWithLocation;
     }
 
     public interface IdleObserver {

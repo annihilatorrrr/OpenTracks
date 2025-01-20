@@ -12,7 +12,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
     </tr>
     <tr>
         <td align="center">
-            <a href="https://f-droid.org/packages/de.dennisguse.opentracks">
+            <a href="https://f-droid.org/packages/de.dennisguse.opentracks.playstore">
                 <img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="60" align="middle">
             </a>
         </td>
@@ -29,7 +29,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
     </tr>
     <tr>
         <td align="center">
-            <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.svg" align="middle" >
+            <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.playstore.svg" align="middle" >
         </td>
         <td></td>
         <td align="center">
@@ -70,7 +70,7 @@ hosted.weblate.org</a>.
     * export automatically after each recording (e.g., to sync via [Nextcloud](https://nextcloud.com/))
     * avoid duplication: each exported file contain a random unique identifier (i.e., `opentracks:trackid`)
 * __Altitude:__
-    * gain/loss via barometric sensor (if present)
+    * gain/loss via barometric sensor (internal if present or via Bluetooth's Environmental Sensing Service)
     * shown in EGM2008 (above mean sea level); exported as WGS84
 * __Bluetooth LE sensors:__
     * heart rate
@@ -109,18 +109,19 @@ The API can be invoked by sending an explicit Intent to start an activity.
 * Debug: `de.dennisguse.opentracks.debug`
 * Nightly: `de.dennisguse.opentracks.nightly`
 
-`Class`:
-
+`Classes`:
 * **Start a recording:**  `de.dennisguse.opentracks.publicapi.StartRecording`
+    * Set track data: `TRACK_NAME`, `TRACK_DESCRIPTION`, `TRACK_CATEGORY`, and `TRACK_ICON` (
+      non-localized identifier
+      see [/src/main/java/de/dennisguse/opentracks/util/TrackIconUtils.java#L38](/src/main/java/de/dennisguse/opentracks/util/TrackIconUtils.java#L38)).
+      NOTE: if `TRACK_ICON` is not present, `TRACK_CATEGORY` will be used to determine the icon (
+      localized).
+    * Send recorded data to another application via _Dashboard API_: `STATS_TARGET_PACKAGE` and
+      `STATS_TARGET_CLASS`
 * **Stop a recording:**  `de.dennisguse.opentracks.publicapi.StopRecording`
+* **Create a marker:**  `de.dennisguse.opentracks.publicapi.CreateMarker`
 
 For testing via adb: `adb shell am start -e someParameter someValue -n "package/class"`
-
-`StartRecording` supports the following parameters:
-
-* Set track data: `TRACK_NAME`, `TRACK_DESCRIPTION`, `TRACK_CATEGORY`, and `TRACK_ICON` (non-localized identifier see [/src/main/java/de/dennisguse/opentracks/util/TrackIconUtils.java#L38](/src/main/java/de/dennisguse/opentracks/util/TrackIconUtils.java#L38)). 
-  NOTE: if `TRACK_ICON` is not present, `TRACK_CATEGORY` will be used to determine the icon (localized).
-* Send recorded data to another application via _Dashboard API_: `STATS_TARGET_PACKAGE` and `STATS_TARGET_CLASS`
 
 The Public API is disabled by default to protect the user's privacy, but it can easily be enabled in the settings.
 
@@ -133,6 +134,8 @@ The Public API is disabled by default to protect the user's privacy, but it can 
 | [OsmAnd](https://github.com/osmandapp/OsmAnd)             | ?                                                                              | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               |
 | [FitTrackee](https://github.com/SamR1/FitTrackee)         | yes                                                                            | n/a                                                                  | n/a                                                                  |
 | [SportsTracker](https://github.com/ssaring/sportstracker) | yes, [single tracks only](https://github.com/ssaring/sportstracker/issues/260) | no                                                                   | no                                                                   |
+| [ExifTool](https://exiftool.org)                          | [yes](https://exiftool.org/forum/index.php?topic=15972.0)                      | no                                                                   | no                                                                   |
+
 
 ## Dashboard API (incl. map)
 

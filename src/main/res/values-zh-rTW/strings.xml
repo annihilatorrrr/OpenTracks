@@ -31,18 +31,14 @@ limitations under the License.
 \n * 完全離線工作
 \n * 在地圖上顯示蹤跡（見下文）</string>
     <string name="help_track_map_title">如何在地圖顯示一個蹤跡？</string>
-    <string name="help_track_map_content"> 使用小的地圖圖示。
-\n a) （即時更新）安裝 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. 透過 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 提供線上或離線地圖。
-\n 實際上，OSMDashboard 是一個單獨的應用程式，只能（暫時）存取將要顯示的蹤跡資料。
-\n b) 透過一個 普通的 地圖應用程式（例如，<a href="http://osmand.net/">OsmAnd</a> 與 <a href="https://maps.me/">MAPS.ME</a>）。 這些 APP 需要支援 KMZ 檔案格式（只有位置與時間戳記）。 事實上，APP 需要支援 <i>ACTION_VIEW</i> 與 MIME <i>application/vnd.google-earth.kmz</i>。 </string>
+    <string name="help_track_map_content"> \u0020使用小的地圖圖示。 
+\n \u0020a) （即時更新）安裝 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>。它透過 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 提供線上或離線地圖。 
+\n \u0020實際上，OSMDashboard 是一個單獨的應用程式，只能（暫時）存取將要顯示的蹤跡資料。 
+\n \u0020b) \u0020透過一個普通的地圖應用程式（例如，<a href="http://osmand.net/">OsmAnd</a> 與 <a href="https://maps.me/">MAPS.ME</a>）。 這些 APP 需要支援 KMZ 檔案格式（只有位置與時間戳記）。 更準確地說，APP 需要支援 <i>ACTION_VIEW</i> 與 MIME <i>application/vnd.google-earth.kmz</i>。 \u0020</string>
     <string name="help_storage_pictures_title">OpenTracks 如何存儲作為標記拍攝的照片？</string>
     <string name="help_storage_pictures_content">這些儲存在應用程序內部儲存區中 (即，只能在 OpenTracks 中存取)。</string>
     <string name="help_track_export_title">如何匯出/分享 紀錄的蹤跡？</string>
-    <string name="help_track_export_content">
-        可以從設定匯出蹤跡為 KMZ、KML 或 GPX。
-        KMZ/KML 全部資料；GPX 只有位置。
-        通過<i>分享圖示</i>以分享蹤跡為 KMZ。
-    </string>
+    <string name="help_track_export_content"> 可以從設定匯出蹤跡為 KMZ、KML 或 GPX。KMZ／KML 全部資料；GPX 只有位置。通過<i>分享圖示</i>以分享蹤跡為 KMZ。 </string>
     <string name="help_data_google_play_services_title">OpenTracks 是否需要/使用 Google Play 服務？</string>
     <string name="help_data_google_play_services_content">否</string>
     <string name="help_recording_title">OpenTracks 是如何記錄資料的？</string>
@@ -51,15 +47,15 @@ limitations under the License.
         如果 GPS 裝置回報的資料不准確 (例如，位置、速度、海拔)，OpenTracks 對此無能為力。
     </string>
     <string name="help_data_storage_title">OpenTracks 如何儲存感測器資料？</string>
-    <string name="help_data_storage_content"> \u0020感測器資料儲存在每個記錄的位置。 就心率感測器而言，這意味著只有<i>一個</i>心率測量值被依照位置儲存。 如果您是站著不動或在室內，沒有感測器資料會被記錄（但它會被顯示）。 \u0020</string>
+    <string name="help_data_storage_content"> 感測器資料儲存在每個記錄的位置。 就心率感測器而言，這意味著只有<i>一個</i>心率測量值被依照位置儲存。 如果您是站著不動或在室內，沒有感測器資料會被記錄（但它會被顯示）。 </string>
     <string name="help_gps_troubleshooting_title">OpenTracks 沒有紀錄位置？</string>
-    <string name="help_gps_troubleshooting_content"> 您能做什麼：
-\n a) 檢查 GPS 是否啟用，
-\n b) 改善 GPS 收訊（例如，前往戶外），
-\n c) 使用 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app 檢查，以及
-\n d) 禁用省電。
+    <string name="help_gps_troubleshooting_content"> \u0020您能做什麼：
+\n　一）檢查 GPS 是否啟用，
+\n　二）改善 GPS 收訊（例如，前往戶外），
+\n　三）使用 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app 檢查，以及
+\n　四）停用省電。
 \n
-\n 如果一切都沒有幫助，請回報 bug。 </string>
+\n如果一切都沒有幫助，請回報 bug。 \u0020</string>
     <string name="help_support_title">我如何支持 OpenTracks？</string>
     <string name="help_support_content">
         您可以：\n
@@ -205,7 +201,6 @@ limitations under the License.
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">顯示錯誤</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">已完成，但有一個錯誤</item>
         <item quantity="other">已完成，但有 %1$d 個錯誤</item>
     </plurals>
     <string name="generic_completed">完成</string>
@@ -239,7 +234,7 @@ limitations under the License.
     <string name="import_unsupported_format">未支援的檔案格式</string>
     <string name="import_parser_error">分析器錯誤：%1$s</string>
     <string name="import_unable_to_import_file">無法匯入檔案：%1$s</string>
-    <string name="import_no_kml_file_found">在 KMZ 中沒有發現 doc.kml 檔案</string>
+    <string name="import_no_kml_file_found">在 KMZ 中沒有發現 kml 檔案</string>
     <string name="import_error_info">%1$s：%2$s</string>
     <string name="import_error_list_dialog_title">檔案未匯入</string>
     <string name="import_file_imported">檔案 %1$s 已匯入</string>
@@ -301,12 +296,11 @@ limitations under the License.
     <string name="sensor_state_power_avg">平均功率</string>
     <string name="sensor_could_not_scan">無法掃描藍牙裝置（錯誤 %1$i）。</string>
     <string name="bluetooth_disabled">請啟用藍芽。</string>
-    <string name="settings_open_tracks_summary">所有關於 OpenTracks 專案</string>
     <string name="settings_defaults_title">預設單位與活動</string>
     <string name="settings_defaults_summary">首選單位、預設活動、蹤跡預設名稱</string>
     <string name="settings_ui_title">使用者介面</string>
     <string name="settings_ui_summary">外觀、紀錄布局、主題</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">時間間隔、距離間隔、最大距離、精度</string>
     <string name="settings_sensors_title">藍芽感測器</string>
     <string name="settings_sensors_summary">自行車感測器、輪周、跑步感測器</string>
@@ -571,8 +565,6 @@ limitations under the License.
     <string name="error_crash_title">%1$s 已崩潰</string>
     <string name="share_crash_report">分享</string>
     <string name="report_bug">回報 bug</string>
-    <string name="select_show_on_map_behavior">選擇「在地圖上顯示」行為</string>
-    <string name="show_on_map_format_ask">詢問</string>
     <string name="show_on_dashboard">OpenTracks 儀表板 API</string>
     <string name="show_on_dashboard_not_installed">沒有安裝支援 OpenTracks 儀表板 API 的應用程式。</string>
     <string name="always">總是</string>

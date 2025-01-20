@@ -18,8 +18,12 @@ import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.SensorConnector;
+import de.dennisguse.opentracks.sensors.SensorManager;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorGPS;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
@@ -32,6 +36,8 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     private static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
     private TrackPointCreator trackPointCreator;
+
+    private SensorManager.SensorDataChangedObserver observer;
     private Context context;
     private Handler handler;
 
@@ -40,8 +46,9 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
 
-    public GPSManager(TrackPointCreator trackPointCreator) {
+    public GPSManager(TrackPointCreator trackPointCreator, SensorManager.SensorDataChangedObserver observer) {
         this.trackPointCreator = trackPointCreator;
+        this.observer = observer;
     }
 
     public void start(@NonNull Context context, @NonNull Handler handler) {
@@ -52,6 +59,9 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
         gpsStatusManager = new GpsStatusManager(context, this, handler);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        observer.onConnect(new AggregatorGPS("internal"));
+
         registerLocationListener();
         gpsStatusManager.start();
     }
@@ -71,6 +81,9 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
         gpsStatusManager.stop();
         gpsStatusManager = null;
+
+        observer.onDisconnect(new AggregatorGPS("internal"));
+        observer = null;
 
         trackPointCreator = null;
     }
@@ -126,7 +139,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
             return;
         }
 
-        trackPointCreator.onChange(location);
+        observer.onChange(new Raw<>(observer.getNow(), Position.of(location)));
     }
 
     @Override

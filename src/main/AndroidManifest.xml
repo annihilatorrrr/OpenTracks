@@ -41,8 +41,10 @@ limitations under the License.
         android:required="false" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"
+        android:minSdkVersion="34" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"
+        android:minSdkVersion="34" />
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -59,10 +61,13 @@ limitations under the License.
     <uses-permission
         android:name="android.permission.BLUETOOTH_SCAN"
         android:usesPermissionFlags="neverForLocation"
+        android:minSdkVersion="31"
         tools:targetApi="s" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"
+        android:minSdkVersion="31" />
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"
+        android:minSdkVersion="33" />
 
     <application
         android:name=".Startup"
@@ -87,6 +92,14 @@ limitations under the License.
         </activity>
         <activity
             android:name=".publicapi.StopRecording"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".publicapi.CreateMarker"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -309,7 +322,7 @@ limitations under the License.
         </activity>
 
         <activity
-            android:name=".ui.markers.MarkerDetailActivity"
+            android:name=".publicapi.ShowMarkerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="de.dennisguse.opentracks.MarkerDetails" />
@@ -317,43 +330,24 @@ limitations under the License.
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".publicapi.CreateMarkerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="de.dennisguse.opentracks.CreateMarker" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.markers.MarkerDetailActivity" />
         <activity android:name=".ui.markers.MarkerEditActivity" />
+        <activity android:name=".ui.markers.MarkerListActivity" />
 
-        <activity
-            android:name=".ui.markers.MarkerListActivity"
-            android:exported="true"
-            android:label="@string/menu_markers"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
-        <activity
-            android:name=".TrackListActivity"
-            android:exported="true"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
+        <activity android:name=".TrackListActivity" />
         <activity android:name=".TrackRecordedActivity" />
         <activity android:name=".TrackStoppedActivity" />
 
-        <activity
-            android:name=".TrackRecordingActivity"
-            android:parentActivityName=".TrackListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TrackListActivity" />
-        </activity>
+        <activity android:name=".TrackRecordingActivity" />
 
         <activity android:name=".TrackEditActivity" />
 
@@ -415,6 +409,16 @@ limitations under the License.
             android:name=".services.TrackDeleteService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <!--Necessary for SDK < 33 to (re-)store per app locale information-->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
     </application>
 
     <queries>

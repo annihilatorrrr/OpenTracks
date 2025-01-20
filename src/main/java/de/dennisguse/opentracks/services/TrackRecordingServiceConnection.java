@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
@@ -29,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.util.PermissionRequester;
 
 /**
  * Wrapper for the track recording service.
@@ -41,6 +43,8 @@ import de.dennisguse.opentracks.BuildConfig;
 public class TrackRecordingServiceConnection {
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
+
+    private static final int SERVICE_BIND_FLAG = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
 
     private final Callback callback;
 
@@ -81,8 +85,19 @@ public class TrackRecordingServiceConnection {
         }
 
         Log.i(TAG, "Binding the service.");
-        int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
-        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
+
+        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, SERVICE_BIND_FLAG);
+    }
+
+    public void bindWithStart(@NonNull Context context) {
+        if (trackRecordingService != null) {
+            callback.onConnected(trackRecordingService, this);
+            return;
+        }
+
+        Log.i(TAG, "Binding and starting the service (not in foreground).");
+
+        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection,  Context.BIND_AUTO_CREATE + SERVICE_BIND_FLAG);
     }
 
     /**
@@ -135,6 +150,21 @@ public class TrackRecordingServiceConnection {
     }
 
     public static void execute(Context context, Callback callback) {
+        Callback withUnbind = (service, connection) -> {
+            callback.onConnected(service, connection);
+            connection.unbind(context);
+        };
+        new TrackRecordingServiceConnection(withUnbind)
+                .bindWithStart(context);
+    }
+
+    public static void executeForeground(Context context, Callback callback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (!PermissionRequester.RECORDING.hasPermission(context)) {
+                throw new MissingPermissionException(PermissionRequester.RECORDING);
+            }
+        }
+
         Callback withUnbind = (service, connection) -> {
             callback.onConnected(service, connection);
             connection.unbind(context);

@@ -26,6 +26,7 @@ import java.time.Instant;
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -45,9 +46,9 @@ public class TrackStatistics {
     private final ExtremityMonitor altitudeExtremities = new ExtremityMonitor();
 
     // The track start time.
-    private Instant startTime;
+    private Instant startTime; //TODO Should never be null!
     // The track stop time.
-    private Instant stopTime;
+    private Instant stopTime; //TODO Should never be null!
 
     private Distance totalDistance;
     // Updated when new points are received, may be stale.
@@ -60,6 +61,7 @@ public class TrackStatistics {
     private Float totalAltitudeLoss_m = null;
     // The average heart rate seen on this track
     private HeartRate avgHeartRate = null;
+    private Power avgPower = null;
 
     private boolean isIdle;
 
@@ -83,6 +85,7 @@ public class TrackStatistics {
         totalAltitudeGain_m = other.totalAltitudeGain_m;
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
         avgHeartRate = other.avgHeartRate;
+        avgPower = other.avgPower;
         isIdle = other.isIdle;
     }
 
@@ -104,6 +107,7 @@ public class TrackStatistics {
      *
      * @param other another statistics data object
      */
+    //TODO Should be refactored to append only [mainly due to isIdle] (NOTE: This requires to use a custom value object for AggregatedStatistics; this is anyhow recommended).
     public void merge(TrackStatistics other) {
         if (startTime == null) {
             startTime = other.startTime;
@@ -116,6 +120,8 @@ public class TrackStatistics {
             stopTime = stopTime.isAfter(other.stopTime) ? stopTime : other.stopTime;
         }
 
+        isIdle = other.isIdle; //TODO This implicitly assumes append mode.
+
         if (avgHeartRate == null) {
             avgHeartRate = other.avgHeartRate;
         } else {
@@ -124,6 +130,19 @@ public class TrackStatistics {
                 // Important to do this before total time is updated
                 avgHeartRate = HeartRate.of(
                         (totalTime.getSeconds() * avgHeartRate.getBPM() + other.totalTime.getSeconds() * other.avgHeartRate.getBPM())
+                                / (totalTime.getSeconds() + other.totalTime.getSeconds())
+                );
+            }
+        }
+
+        if (avgPower == null) {
+            avgPower = other.avgPower;
+        } else {
+            if (other.avgPower != null) {
+                // Using total time as weights for the averaging.
+                // Important to do this before total time is updated
+                avgPower = Power.of(
+                        (totalTime.getSeconds() * avgPower.getW() + other.totalTime.getSeconds() * other.avgPower.getW())
                                 / (totalTime.getSeconds() + other.totalTime.getSeconds())
                 );
             }
@@ -270,6 +289,15 @@ public class TrackStatistics {
         return avgHeartRate;
     }
 
+    public boolean hasPower() {
+        return avgPower != null;
+    }
+
+    @Nullable
+    public Power getAveragePower() {
+        return avgPower;
+    }
+
     /**
      * Gets the average speed.
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
@@ -330,6 +358,12 @@ public class TrackStatistics {
     public void setAverageHeartRate(HeartRate heartRate) {
         if (heartRate != null) {
             avgHeartRate = heartRate;
+        }
+    }
+
+    public void setAveragePower(Power power) {
+        if (power != null) {
+            avgPower = power;
         }
     }
 

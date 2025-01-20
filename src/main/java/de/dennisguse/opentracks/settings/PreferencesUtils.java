@@ -52,7 +52,6 @@ import de.dennisguse.opentracks.sensors.SensorType;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
-import de.dennisguse.opentracks.util.IntentDashboardUtils;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -75,8 +74,8 @@ public class PreferencesUtils {
     /**
      * Must be called during application startup.
      */
-    public static void initPreferences(final Context context, final Resources resources) {
-        PreferencesUtils.resources = resources;
+    public static void initPreferences(final Context context) {
+        PreferencesUtils.resources = context.getResources();
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
@@ -85,6 +84,10 @@ public class PreferencesUtils {
     public static void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
         sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener);
         changeListener.onSharedPreferenceChanged(sharedPreferences, null);
+    }
+
+    public static void registerOnSharedPreferenceChangeListenerSilent(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener);
     }
 
     public static void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
@@ -225,7 +228,7 @@ public class PreferencesUtils {
 
     //TODO Check if actually needed or can be superseeded by a flexible default in getUnit()
     public static void applyDefaultUnit() {
-        if (getString(R.string.stats_units_key, "").equals("")) {
+        if (getString(R.string.stats_units_key, "").isEmpty()) {
             if (!Locale.US.equals(Locale.getDefault())) {
                 setUnit(UnitSystem.METRIC);
             } else {
@@ -329,6 +332,14 @@ public class PreferencesUtils {
         return getBoolean(R.string.voice_announce_idle_key, true);
     }
 
+    public static boolean shouldVoiceAnnounceTime() {
+        return getBoolean(R.string.voice_announce_unit_key, true);
+    }
+
+    public static boolean shouldVoiceAnnounceUnit() {
+        return getBoolean(R.string.voice_announce_unit_key, true);
+    }
+
     public static Duration getVoiceAnnouncementFrequency() {
         final int DEFAULT = Integer.parseInt(resources.getString(R.string.voice_announcement_frequency_default));
         int value = getInt(R.string.voice_announcement_frequency_key, DEFAULT);
@@ -336,17 +347,17 @@ public class PreferencesUtils {
     }
 
     static String[] getVoiceAnnouncementFrequencyEntries() {
-        String[] values = resources.getStringArray(R.array.voice_announcement_frequency_values);
-        String[] options = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            if (resources.getString(R.string.announcement_off).equals(values[i])) {
-                options[i] = resources.getString(R.string.value_off);
+        String[] entryValues = resources.getStringArray(R.array.voice_announcement_frequency_values);
+        String[] entries = new String[entryValues.length];
+        for (int i = 0; i < entryValues.length; i++) {
+            if (resources.getString(R.string.announcement_off).equals(entryValues[i])) {
+                entries[i] = resources.getString(R.string.value_off);
             } else {
-                int value = Integer.parseInt(values[i]);
-                options[i] = resources.getString(R.string.value_integer_minute, Duration.ofSeconds(value).toMinutes());
+                int value = Integer.parseInt(entryValues[i]);
+                entries[i] = resources.getString(R.string.value_integer_minute, Duration.ofSeconds(value).toMinutes());
             }
         }
-        return options;
+        return entries;
     }
 
     /**
@@ -362,23 +373,23 @@ public class PreferencesUtils {
      * @return Result depends on getUnitSystem
      */
     static String[] getVoiceAnnouncementDistanceEntries() {
-        String[] values = resources.getStringArray(R.array.voice_announcement_distance_values);
-        String[] options = new String[values.length];
+        String[] entryValues = resources.getStringArray(R.array.voice_announcement_distance_values);
+        String[] entries = new String[entryValues.length];
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
                 .setUnit(unitSystem)
                 .build(resources);
-        for (int i = 0; i < values.length; i++) {
-            if (resources.getString(R.string.announcement_off).equals(values[i])) {
-                options[i] = resources.getString(R.string.value_off);
+        for (int i = 0; i < entryValues.length; i++) {
+            if (resources.getString(R.string.announcement_off).equals(entryValues[i])) {
+                entries[i] = resources.getString(R.string.value_off);
             } else {
-                Distance distance = Distance.one(unitSystem).multipliedBy(Double.parseDouble(values[i]));
-                options[i] = formatter.formatDistance(distance);
+                Distance distance = Distance.one(unitSystem).multipliedBy(Double.parseDouble(entryValues[i]));
+                entries[i] = formatter.formatDistance(distance);
             }
         }
-        return options;
+        return entries;
     }
 
     public static float getVoiceSpeedRate() {
@@ -420,6 +431,19 @@ public class PreferencesUtils {
     @VisibleForTesting
     public static void setVoiceAnnounceLapSpeedPace(boolean value) {
         setBoolean(R.string.voice_announce_lap_speed_pace_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceLapPower() {
+        return getBoolean(R.string.voice_announce_lap_power_key, false);
+    }
+
+    public static boolean shouldVoiceAnnounceHeartRateCurrent() {
+        return getBoolean(R.string.voice_announce_heart_rate_current_key, false);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceHeartRateCurrent(boolean value) {
+        setBoolean(R.string.voice_announce_heart_rate_current_key, value);
     }
 
     public static boolean shouldVoiceAnnounceLapHeartRate() {
@@ -630,7 +654,9 @@ public class PreferencesUtils {
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
 
-            if (value == idleDurationDefault) {
+            if (resources.getString(R.string.announcement_off).equals(entryValues[i])) {
+                entries[i] = resources.getString(R.string.value_off);
+            } else if (value == idleDurationDefault) {
                 entries[i] = resources.getString(R.string.value_int_seconds, value);
             } else {
                 entries[i] = value < 60 ? resources.getString(R.string.value_integer_second, value) : resources.getString(R.string.value_integer_minute, value / 60);
@@ -670,13 +696,29 @@ public class PreferencesUtils {
     }
 
     /**
-     * @return {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
+     * @return * {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
+     * * 3: Night OLED friendly
      */
-    public static int getDefaultNightMode() {
+    private static String getUiMode() {
         final String defaultValue = getKey(R.string.night_mode_default);
         final String value = getString(R.string.night_mode_key, defaultValue);
 
-        return Integer.parseInt(value);
+        return value;
+    }
+
+    public static boolean shouldApplyOledTheme() {
+        return resources.getString(R.string.night_mode_night_oled_value)
+                .equals(getUiMode());
+    }
+
+    public static void applyNightMode() {
+        String uiMode = getUiMode();
+        if (resources.getString(R.string.night_mode_night_oled_value)
+                .equals(uiMode)) {
+            return;
+        }
+
+        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(uiMode));
     }
 
     public static void resetPreferences(Context context, boolean readAgain) {
@@ -823,23 +865,11 @@ public class PreferencesUtils {
         }
     }
 
-    public static void applyNightMode() {
-        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode());
-    }
-
     //TODO Check if resetPreferences can be used instead.
     @Deprecated
     @VisibleForTesting
     public static void clear() {
         sharedPreferences.edit().clear().commit();
-    }
-
-    public static void setShowOnMapFormat(final String showOnMapFormat) {
-        setString(R.string.show_on_map_format_key, showOnMapFormat);
-    }
-
-    public static String getShowOnMapFormat() {
-        return getString(R.string.show_on_map_format_key, IntentDashboardUtils.PREFERENCE_ID_ASK);
     }
 
     public static int getTotalRowsDeleted() {

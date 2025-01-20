@@ -377,8 +377,6 @@ public class ContentProviderUtils {
         int categoryIndex = cursor.getColumnIndexOrThrow(MarkerColumns.CATEGORY);
         int iconIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ICON);
         int trackIdIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TRACKID);
-        int lengthIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LENGTH);
-        int durationIndex = cursor.getColumnIndexOrThrow(MarkerColumns.DURATION);
         int longitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LONGITUDE);
         int latitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LATITUDE);
         int timeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TIME);
@@ -419,13 +417,6 @@ public class ContentProviderUtils {
         if (!cursor.isNull(iconIndex)) {
             marker.setIcon(cursor.getString(iconIndex));
         }
-        if (!cursor.isNull(lengthIndex)) {
-            marker.setLength(Distance.of(cursor.getFloat(lengthIndex)));
-        }
-        if (!cursor.isNull(durationIndex)) {
-            marker.setDuration(Duration.ofMillis(cursor.getLong(durationIndex)));
-        }
-
         if (!cursor.isNull(photoUrlIndex)) {
             marker.setPhotoUrl(cursor.getString(photoUrlIndex));
         }
@@ -496,12 +487,11 @@ public class ContentProviderUtils {
         return markers;
     }
 
-    /**
-     * @return the content provider URI of the inserted marker.
-     */
-    public Uri insertMarker(@NonNull Marker marker) {
+    // TODO Merge with updateMarker
+    public Marker.Id insertMarker(@NonNull Marker marker) {
         marker.setId(null);
-        return contentResolver.insert(MarkerColumns.CONTENT_URI, createContentValues(marker));
+        Uri uri = contentResolver.insert(MarkerColumns.CONTENT_URI, createContentValues(marker));
+        return new Marker.Id(ContentUris.parseId(uri));
     }
 
     private void deleteMarkerPhoto(Context context, Marker marker) {
@@ -542,9 +532,6 @@ public class ContentProviderUtils {
         values.put(MarkerColumns.CATEGORY, marker.getCategory());
         values.put(MarkerColumns.ICON, marker.getIcon());
         values.put(MarkerColumns.TRACKID, marker.getTrackId().id());
-        values.put(MarkerColumns.LENGTH, marker.getLength().toM());
-        values.put(MarkerColumns.DURATION, marker.getDuration().toMillis());
-
         values.put(MarkerColumns.LONGITUDE, (int) (marker.getLongitude() * 1E6));
         values.put(MarkerColumns.LATITUDE, (int) (marker.getLatitude() * 1E6));
         values.put(MarkerColumns.TIME, marker.getTime().toEpochMilli());

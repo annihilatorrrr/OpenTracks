@@ -23,8 +23,10 @@ import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Updater for {@link TrackStatistics}.
@@ -43,6 +45,8 @@ public class TrackStatisticsUpdater {
 
     private float averageHeartRateBPM;
     private Duration totalHeartRateDuration = Duration.ZERO;
+    private float averagePowerW;
+    private Duration totalPowerDuration = Duration.ZERO;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment;
@@ -53,11 +57,6 @@ public class TrackStatisticsUpdater {
         this(new TrackStatistics());
     }
 
-    /**
-     * Creates a new{@link TrackStatisticsUpdater} with a {@link TrackStatisticsUpdater} already existed.
-     *
-     * @param trackStatistics a {@link TrackStatisticsUpdater}
-     */
     public TrackStatisticsUpdater(TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
         this.currentSegment = new TrackStatistics();
@@ -84,9 +83,6 @@ public class TrackStatisticsUpdater {
         trackPoints.stream().forEachOrdered(this::addTrackPoint);
     }
 
-    /**
-     *
-     */
     public void addTrackPoint(TrackPoint trackPoint) {
         if (trackPoint.isSegmentManualStart()) {
             reset(trackPoint);
@@ -125,6 +121,17 @@ public class TrackStatisticsUpdater {
             currentSegment.setAverageHeartRate(HeartRate.of(averageHeartRateBPM));
         }
 
+        // Update power
+        if (trackPoint.hasPower() && lastTrackPoint != null) {
+            Duration trackPointDuration = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
+            Duration newTotalDuration = totalPowerDuration.plus(trackPointDuration);
+
+            averagePowerW = (totalPowerDuration.toMillis() * averagePowerW + trackPointDuration.toMillis() * trackPoint.getPower().getW()) / newTotalDuration.toMillis();
+            totalPowerDuration = newTotalDuration;
+
+            currentSegment.setAveragePower(Power.of(averagePowerW));
+        }
+
         {
             // Update total distance
             Distance movingDistance = null;
@@ -137,18 +144,23 @@ public class TrackStatisticsUpdater {
                 movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
             }
             if (movingDistance != null) {
-                currentSegment.setIdle(false);
                 currentSegment.addTotalDistance(movingDistance);
             }
 
-            if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart()) {
-                if (lastTrackPoint != null) {
+            if (!currentSegment.isIdle()) {
+                if (!trackPoint.isSegmentManualStart() && lastTrackPoint != null) {
                     currentSegment.addMovingTime(trackPoint, lastTrackPoint);
                 }
             }
 
-            if (trackPoint.getType() == TrackPoint.Type.IDLE) {
+            if (trackPoint.isIdleTriggered()) {
                 currentSegment.setIdle(true);
+            } else if (currentSegment.isIdle()) {
+                // Shall we switch to non-idle?
+                if (movingDistance != null
+                        && movingDistance.greaterOrEqualThan(PreferencesUtils.getRecordingDistanceInterval())) {
+                    currentSegment.setIdle(false);
+                }
             }
 
             if (trackPoint.hasSpeed()) {

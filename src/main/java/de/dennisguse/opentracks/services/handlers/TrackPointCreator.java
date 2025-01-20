@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
@@ -69,10 +68,6 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
         this.context = null;
     }
 
-    public synchronized void onChange(@NonNull Location location) {
-        onNewTrackPoint(new TrackPoint(location, createNow()));
-    }
-
     /**
      * Got a new TrackPoint from Bluetooth only; contains no GPS location.
      */
@@ -129,8 +124,7 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
         return new Pair<>(currentTrackPoint, sensorDataSet);
     }
 
-    @VisibleForTesting
-    Instant createNow() {
+    public Instant createNow() {
         return Instant.now(clock);
     }
 

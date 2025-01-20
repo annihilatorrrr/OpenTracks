@@ -118,7 +118,13 @@ public class Track {
     }
 
     public OffsetDateTime getStartTime() {
-        return trackStatistics.getStartTime().atOffset(zoneOffset);
+        return trackStatistics
+                .getStartTime().atOffset(zoneOffset);
+    }
+
+    public OffsetDateTime getStopTime() {
+        return trackStatistics
+                .getStopTime().atOffset(zoneOffset);
     }
 
     @NonNull
@@ -128,6 +134,16 @@ public class Track {
 
     public void setTrackStatistics(@NonNull TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", activityTypeLocalized='" + activityTypeLocalized + '\'' +
+                ", activityType=" + activityType +
+                '}';
     }
 
     @Override

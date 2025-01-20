@@ -30,7 +30,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">prowadzenie autobusu</string>
     <string name="activity_type_driving_car">prowadzenie samochodu</string>
     <string name="activity_type_ferry">prom</string>
-    <string name="activity_type_frisbee">fisbee</string>
+    <string name="activity_type_frisbee">frizbee</string>
     <string name="activity_type_gliding">szybownictwo</string>
     <string name="activity_type_hang_gliding">lotniarstwo</string>
     <string name="activity_type_helicopter">helikopter</string>
@@ -431,7 +431,7 @@ limitations under the License.
     <string name="import_progress_summary_exists_msg">Już istnieje</string>
     <string name="import_progress_summary_ok_msg">Pliki importowane</string>
     <string name="import_file_imported">Plik %1$s zaimportowany</string>
-    <string name="import_no_kml_file_found">W pliku KMZ nie znaleziono pliku doc.kml</string>
+    <string name="import_no_kml_file_found">W pliku KMZ nie znaleziono pliku kml</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="track_pace_notification">Prędkość: %1$s</string>
     <string name="track_speed_notification">Szybkość: %1$s</string>
@@ -464,8 +464,8 @@ limitations under the License.
     <string name="permission_bluetooth_failed_rejected">Należy manualnie zezwolić OpenTracks na dostęp do Najbliższych Urządzeń w ustawieniach.</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="settings_ui_summary">Wygląd, Układ ekranu śledzenia, Motyw</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_sensors_title">Czujnik Bluetooth</string>
+    <string name="settings_gps_sensor">GPS</string>
+    <string name="settings_sensors_title">Czujnik</string>
     <string name="settings_sensors_summary">Czujniki rowerowe, Obwód koła, Czujniki biegowe</string>
     <string name="settings_announcements_statistics_title">Wiadomości głosowe</string>
     <string name="settings_announcements_summary">Czas, Dystans, Głos prędkości</string>
@@ -496,7 +496,6 @@ limitations under the License.
     <string name="field_remove_from_layout">Usuń</string>
     <string name="field_set_primary">Główny</string>
     <string name="field_set_secondary">Poboczny</string>
-    <string name="settings_open_tracks_summary">Wszystko o projekcie OpenTacks</string>
     <string name="settings_defaults_title">Domyślne Jednostki i Aktywności</string>
     <string name="settings_defaults_summary">Preferowane Jednostki, Domyślne Aktywności, Nazwy Treningów</string>
     <string name="generic_filter">Filtr</string>

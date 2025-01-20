@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.ui.markers;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,7 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
+import androidx.annotation.UiThread;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
@@ -48,7 +47,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractActivity {
+public class MarkerListActivity extends AbstractActivity implements DeleteMarkerDialogFragment.DeleteMarkerCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -94,7 +93,6 @@ public class MarkerListActivity extends AbstractActivity {
         }
     };
     private MenuItem insertMarkerMenuItem;
-    private MenuItem searchMenuItem;
 
     private String searchQuery;
 
@@ -112,8 +110,11 @@ public class MarkerListActivity extends AbstractActivity {
         viewBinding.markerList.setLayoutManager(layoutManager);
         viewBinding.markerList.setAdapter(adapter);
 
-        setSupportActionBar(viewBinding.markerListToolbar);
         adapter.setActionModeCallback(contextualActionModeCallback);
+
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+        setSupportActionBar(viewBinding.markerListToolbar);
+        viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationOnClickListener(item -> finish());
     }
 
     @Override
@@ -147,6 +148,14 @@ public class MarkerListActivity extends AbstractActivity {
     @Override
     protected View getRootView() {
         viewBinding = MarkerListBinding.inflate(getLayoutInflater());
+
+        viewBinding.markerListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            searchQuery = viewBinding.markerListSearchView.getEditText().getText().toString();
+            viewBinding.markerListSearchView.hide();
+            loadData();
+            return true;
+        });
+
         return viewBinding.getRoot();
     }
 
@@ -155,9 +164,6 @@ public class MarkerListActivity extends AbstractActivity {
         getMenuInflater().inflate(R.menu.marker_list, menu);
 
         insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
-
-        searchMenuItem = menu.findItem(R.id.marker_list_search);
-        ActivityUtils.configureSearchWidget(this, searchMenuItem);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -230,34 +236,10 @@ public class MarkerListActivity extends AbstractActivity {
         return false;
     }
 
-    @Override
-    public void onBackPressed() {
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-        }
-
-        if (searchQuery != null) {
-            searchQuery = null;
-            loadData();
-            return;
-        }
-
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            searchQuery = intent.getStringExtra(SearchManager.QUERY);
-        } else {
-            searchQuery = null;
-        }
-    }
-
+    @UiThread
     private void loadData() {
+        viewBinding.markerListToolbar.setText(searchQuery);
+
         viewBinding.markerListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
 
         List<Marker> markers = contentProviderUtils.searchMarkers(trackId, searchQuery);
@@ -275,5 +257,10 @@ public class MarkerListActivity extends AbstractActivity {
 
     private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
+    }
+
+    @Override
+    public void onMarkerDeleted() {
+        runOnUiThread(this::loadData);
     }
 }

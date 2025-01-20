@@ -24,6 +24,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.time.Duration;
 import java.util.List;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
@@ -32,6 +33,7 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackDataHub;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.TrackRecordingBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
@@ -136,7 +138,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         viewBinding.trackRecordingFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.opentracks));
         viewBinding.trackRecordingFabAction.setBackgroundColor(ContextCompat.getColor(this, R.color.opentracks));
         viewBinding.trackRecordingFabAction.setOnLongClickListener((view) -> {
-            ActivityUtils.vibrate(this, 1000);
+            ActivityUtils.vibrate(this, Duration.ofSeconds(1));
             trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this);
             Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackStoppedActivity.class)
                     .putExtra(TrackStoppedActivity.EXTRA_TRACK_ID, trackId);
@@ -268,9 +270,14 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
 
         if (item.getItemId() == R.id.track_detail_insert_marker) {
+            TrackPoint trackPoint = trackRecordingServiceConnection.getTrackRecordingService().getLastStoredTrackPointWithLocation();
+            if (trackPoint == null) {
+                return true;
+            }
             Intent intent = IntentUtils
                     .newIntent(this, MarkerEditActivity.class)
-                    .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+                    .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId)
+                    .putExtra(MarkerEditActivity.EXTRA_LOCATION, trackPoint.getLocation());
             startActivity(intent);
             return true;
         }

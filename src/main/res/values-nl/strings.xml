@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">Over OpenTracks</string>
+    <string name="about_preference_title">Over</string>
     <string name="about_description"><i>OpenTracks</i> is een sport tracker applicatie met respect voor privacy.</string>
     <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Versienaam: %1$s</string>
@@ -24,44 +24,28 @@ limitations under the License.
     <!-- Help -->
     <string name="help_feature_title">OpenTracks heeft de volgende kenmerken:</string>
     <string name="help_feature_content">* GPS-tracks aanmaken
-\n * een hartslagsensor gebruiken (alleen Bluetooth LE)
-\n * spraakaankondigingen (op tijd of afstand)
-\n * markereringen aanmaken (incl. foto\'s)
-\n * werkt volledig offline
-\n * toon tracks op een kaart (zie hieronder)</string>
+\n* een hartslagsensor gebruiken (alleen Bluetooth LE)
+\n* spraakaankondigingen (op tijd of afstand)
+\n* markereringen aanmaken (incl. foto\'s)
+\n* werkt volledig offline
+\n* toon tracks op een kaart (zie hieronder)</string>
     <string name="help_track_map_title">Hoe wordt een spoor op een kaart weergegeven\?</string>
-    <string name="help_track_map_content"> \u0020Gebruik het kleine kaartpictogram.
-\n \u0020a) \u0020(live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>. 
-\n \u0020Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van de track(s) die getoond gaan worden.
-\n \u0020b) \u0020Via een normale kaartapplicatie (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>). Deze apps moeten het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels). In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
+    <string name="help_track_map_content">Gebruik het kleine kaartpictogram. \n a) (live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>. \n Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van de track(s) die getoond gaan worden. \n b) Via een normale kaartapplicatie (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>). Deze apps moeten het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels). In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>.</string>
     <string name="help_storage_pictures_title">Hoe slaat OpenTracks foto\'s op die als markeringen zijn genomen\?</string>
     <string name="help_storage_pictures_content">Deze worden opgeslagen in de interne opslag van de app (d.w.z. alleen toegankelijk binnen OpenTracks).</string>
     <string name="help_track_export_title">Hoe kan ik opgenomen tracks exporteren/delen?</string>
-    <string name="help_track_export_content"> \u0020Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX. KMZ/KML alle gegevens; GPX alleen locaties. \u0020Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ \u0020</string>
+    <string name="help_track_export_content">Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX. KMZ/KML alle gegevens; GPX alleen locaties. Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ.</string>
     <string name="help_data_google_play_services_title">Vereist/gebruikt OpenTracks Google Play Service\?</string>
     <string name="help_recording_title">Hoe legt OpenTracks gegevens vast?</string>
     <string name="help_recording_content">
 OpenTracks gebruikt de GPS-sensor van het apparaat om de locatie continu te registreren.
 Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid, hoogte), kan OpenTracks daar niets aan doen.</string>
     <string name="help_data_storage_title">Hoe slaat OpenTracks sensorgegevens op?</string>
-    <string name="help_data_storage_content"> \u0020De sensorgegevens worden per opgenomen locatie opgeslagen. In termen van een hartslagsensor betekent dit dat slechts <i>een</i> hartslagmeting per locatie wordt opgeslagen. Als u stilstaat of binnenshuis bent, worden er geen sensorgegevens geregistreerd (maar wel getoond) \u0020</string>
+    <string name="help_data_storage_content">De sensorgegevens worden per opgenomen locatie opgeslagen. In termen van een hartslagsensor betekent dit dat slechts <i>een</i> hartslagmeting per locatie wordt opgeslagen. Als u stilstaat of binnenshuis bent, worden er geen sensorgegevens geregistreerd (maar wel getoond).</string>
     <string name="help_gps_troubleshooting_title">OpenTracks neemt geen locaties op?</string>
-    <string name="help_gps_troubleshooting_content"> \u0020Wat u kunt doen: 
-\n \u0020a) Controleer of GPS is ingeschakeld, 
-\n \u0020b) verbeter de GPS-ontvangst (ga bijvoorbeeld naar buiten), 
-\n \u0020c) controleren met <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, en 
-\n \u0020d) schakel energiebesparing uit. 
-\n 
-\n \u0020Als alles niet helpt, rapporteer dan een mogelijke fout. \u0020</string>
+    <string name="help_gps_troubleshooting_content">Wat u kunt doen:\n a) Controleer of GPS is ingeschakeld,\n b) verbeter de GPS-ontvangst (ga bijvoorbeeld naar buiten),\n c) controleren met <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, en\n d) schakel energiebesparing uit.\n \n Als alles niet helpt, rapporteer dan een mogelijke fout.</string>
     <string name="help_support_title">Hoe kan ik OpenTracks ondersteunen?</string>
-    <string name="help_support_content"> \u0020U kunt: 
-\n \u0020a) anderen vertellen over OpenTracks, 
-\n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">functies voorstellen</a>, 
-\n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">bugs melden</a>, 
-\n \u0020d) helpen bij de ontwikkeling van software, 
-\n \u0020e) aanschaffen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>, 
-\n \u0020f) doneren, en 
-\n \u0020g) wat u ook denkt dat OpenTracks helpt. \u0020</string>
+    <string name="help_support_content">U kunt:\n a) anderen vertellen over OpenTracks,\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">functies voorstellen</a>,\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">bugs melden</a>,\n d) helpen bij de ontwikkeling van software,\n e) aanschaffen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n f) doneren, en\n g) wat u ook denkt dat OpenTracks helpt.</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">vliegtuig</string>
     <string name="activity_type_atv">quad</string>
@@ -238,7 +222,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_keep_screen_on_while_recording_title">Houd het scherm aan</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Houd tijdens de opname het scherm aan.</string>
     <string name="settings_recording_default_activity_title">Activiteittype</string>
-    <string name="settings_recording_location_frequency_summary">%1$s tussen opgenomen locaties</string>
+    <string name="settings_recording_location_frequency_summary">%1$s tussen locatiecontroles</string>
     <string name="settings_recording_max_recording_distance_summary">Er wordt een nieuw segment gemaakt als de afstand tussen twee locaties groter is dan %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maximale afstand</string>
     <string name="settings_recording_min_recording_distance_title">Afstand tussen opnamen</string>
@@ -385,7 +369,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="generic_click_twice_cancel">Klik nogmaals terug om te annuleren</string>
     <string name="settings_default_export_uri_title">Spoor export map</string>
     <string name="import_thread_interrupted">Draad onderbroken</string>
-    <string name="import_no_kml_file_found">Geen doc.kml bestand gevonden in KMZ</string>
+    <string name="import_no_kml_file_found">Geen kml bestand gevonden in KMZ</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Volledig scherm</string>
     <string name="gps_fixed_and_ready">GPS vast en klaar</string>
     <string name="aggregated_stats_empty_message">Neem uw eerste route op om geaggregeerde statistieken te zien</string>
@@ -460,7 +444,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="menu_filter">Filter</string>
     <string name="permission_bluetooth_failed_rejected">OpenTracks moet handmatig toegang krijgen tot Apparaten in de buurt.</string>
     <string name="menu_add_custom_layout">Nieuwe lay-out</string>
-    <string name="settings_import_export_title">Invoer/uitvoer</string>
+    <string name="settings_import_export_title">Invoer en uitvoer</string>
     <string name="settings_announcements_totaltime_frequency">Tijdsinterval</string>
     <string name="field_set_secondary">Secondair</string>
     <string name="field_remove_from_layout">Verwijderen</string>
@@ -490,7 +474,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/u (aanbevolen)</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="export_cannot_write_to_dir">Geen schrijfrecht in export map.</string>
     <string name="generic_choose_an_option">Maak een keuze</string>
     <string name="permission_bluetooth_failed">OpenTracks heeft toestemming nodig om Bluetooth te gebruiken.</string>
@@ -510,7 +494,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_customize_layout_select_columns">Gegevensvelden per rij</string>
     <string name="value_float_mile_hour">%1$.1f mi/u</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/u (aanbevolen)</string>
-    <string name="settings_open_tracks_summary">Alles over het OpenTracks Project</string>
     <string name="activity_type_workout">training</string>
     <string name="settings_layout_reset_confirm_title">Lay-outs terugzetten\?</string>
     <string name="settings_layout_reset_done">Alle lay-out instellingen zijn hersteld naar standaardwaarden</string>
@@ -522,7 +505,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_defaults_title">Standaard Eenheden en Activiteit</string>
     <string name="settings_defaults_summary">Voorkeurslengtemaat, standaardactiviteit, standaardroutenaam</string>
     <string name="settings_gps_summary">Tijdsinterval, afstandsinterval, maximale afstand, nauwkeurigheid</string>
-    <string name="settings_sensors_title">Bluetooth sensoren</string>
+    <string name="settings_sensors_title">Sensoren</string>
     <string name="settings_sensors_summary">Fiets sensoren, wielomtrek, loop sensoren</string>
     <string name="settings_announcements_statistics_title">Gesproken berichten</string>
     <string name="custom_layout_list_title">Lay-outs</string>
@@ -537,15 +520,13 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="report_bug">Bug rapporteren</string>
     <string name="share_crash_report">Deel het crash rapport</string>
     <string name="settings_announcements_average_heart_rate">Gemiddelde hartslag</string>
-    <string name="settings_announcements_lap_heart_rate">Hartslag per ronde</string>
+    <string name="settings_announcements_lap_heart_rate">Ronde-hartslag</string>
     <string name="image_discard">Weggooien</string>
     <string name="settings_announcements_average_speed_pace">Gemiddelde snelheid/tred</string>
     <string name="track_discarding">Track weggooien</string>
     <string name="settings_announcements_lap_speed_pace">Snelheid/tred per ronde</string>
     <string name="show_on_dashboard">OpenTracks Dashboard API</string>
     <string name="always">Altijd</string>
-    <string name="show_on_map_format_ask">Vragen</string>
-    <string name="select_show_on_map_behavior">Selecteer \"toon op kaart\"-gedrag</string>
     <string name="show_on_dashboard_not_installed">Er is geen app geïnstalleerd die OpenTracks Dashboard API ondersteunt.</string>
     <string name="help_data_google_play_services_content">Nee</string>
     <string name="introduction_osm_dashboard">OpenTracks zelf biedt geen kaart. Installeer OSMDashboard om uw opnames op een kaart te bekijken.</string>
@@ -598,4 +579,20 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="value_internal_sensor">Interne sensor</string>
     <string name="sensor_state_pressure">Barometer</string>
+    <string name="settings_recording_location_distance_summary">%1$s tussen opgenomen locaties</string>
+    <string name="settings_recording_min_sampling_interval_title">Interval van metingen</string>
+    <string name="settings_theme_switch_restart">Themawijzigingen kunnen een handmatige herstart verlangen.</string>
+    <string name="settings_night_mode_option_night_oled">Nacht (OLED-vriendelijk)</string>
+    <string name="settings_announcements_unit">Afstand-/snelheidseenheid</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power">Power</string>
+    <string name="settings_announcements_lap_power">Lap power</string>
+    <string name="power_x_watt">Power {x, plural, =1 {1 watt} other {# watt} }</string>
+    <string name="create_marker_error">Kan geen markering maken. Probeer het opnieuw.</string>
+    <string name="settings_locale_title">Taal</string>
+    <string name="settings_locale_system_default">Systeemstandaard</string>
+    <string name="stats_gain_loss">Winst &amp; verlies</string>
+    <string name="lap_heart_rate">Ronde-hartslag</string>
 </resources>

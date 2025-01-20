@@ -175,7 +175,7 @@ limitations under the License.
     <string name="settings_chart_by_distance">Etter avstand</string>
     <string name="settings_chart_by_time">Etter tid</string>
     <string name="settings_recording_default_activity_title">Forvalgt aktivitetstype</string>
-    <string name="settings_recording_location_frequency_summary">%1$s mellom registrerte posisjoner</string>
+    <string name="settings_recording_location_frequency_summary">%1$s mellom posisjonskontroller</string>
     <string name="settings_recording_max_recording_distance_summary">Det blir opprettet et nytt segment hvis avstanden mellom to posisjoner er større enn %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maks. avstand</string>
     <string name="settings_recording_min_recording_distance_title">Avstandsintervall for opptak</string>
@@ -196,9 +196,7 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metriske (km, m)</string>
     <string name="settings_stats_units_title">Foretrukne enheter</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Jeg tror du kan være interessert i dette sporet.
-\n
-\n%1$s</string>
+    <string name="share_track_share_file_body">Jeg tror du kan være interessert i dette sporet.\n\n%1$s</string>
     <string name="share_track_subject">Jeg vil dele et spor med deg</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Gjen. forflytningstempo</string>
@@ -359,12 +357,7 @@ limitations under the License.
     <string name="sensor_could_not_scan">Kunne ikke se etter Blåtannsenheter (feil %1$i).</string>
     <string name="help_data_google_play_services_title">Krever/bruker OpenTracks Google Play-tjenesten\?</string>
     <string name="help_feature_title">OpenTracks har følgende funksjoner:</string>
-    <string name="help_feature_content">* Opprett GPS-spor
-\n * Bruk av pulssensor (kun Blåtann-LE)
-\n * Talemeldinger (etter tid eller distanse)
-\n * Opprett markører (inkl. bilder)
-\n * Fungerer uten Internett-forbindelse
-\n * Vis spor på et kart (se nedenfor)</string>
+    <string name="help_feature_content">* Opprett GPS-spor \n* Bruk av pulssensor (kun Blåtann-LE) \n* Talemeldinger (etter tid eller distanse) \n* Opprett markører (inkl. bilder) \n* Fungerer uten Internett-forbindelse \n* Vis spor på et kart (se nedenfor)</string>
     <string name="help_track_map_title">Hvordan vise et spor på et kart\?</string>
     <string name="about_description"><i>OpenTracks</i> er et sportssporingsprogram som fullt ut respekterer ditt personvern.</string>
     <string name="about_url">Prosjektnettside: <a href="%1$s">%1$s</a></string>
@@ -392,21 +385,8 @@ limitations under the License.
     <string name="help_data_storage_title">Hvordan lagrer OpenTracks sensordata\?</string>
     <string name="help_data_storage_content"> Sensordata lagres per posisjon som er tatt opp. Når det gjelder pulssensorer betyr dette at kun <i>én</i> pulsmåling lagres per posisjon. Hvis du står stille eller er innendørs, blir ingen sensordata tatt opp (men de vil bli vist). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks tar ikke opp posisjoner\?</string>
-    <string name="help_gps_troubleshooting_content"> Hva du kan gjøre:
-\n a) sjekk om GPS er slått på,
-\n b) forbedre GPS-mottak (f.eks. gå utendørs),
-\n c) sjekk med programmet <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, og
-\n d) slå av strømsparing.
-\n
-\n Hvis alt dette ikke hjelper, kan du rapportere en feil. </string>
-    <string name="help_support_content"> Du kan:
-\n a) spre info om OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">foreslå funksjoner</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportere feil</a>,
-\n d) hjelpe til med programvareutvikling,
-\n e) kjøpe programmet i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
-\n f) donere, og
-\n g) gjøre noe du tror hjelper OpenTracks. </string>
+    <string name="help_gps_troubleshooting_content">Hva du kan gjøre:\n a) sjekk om GPS er slått på,\n b) forbedre GPS-mottak (f.eks. gå utendørs),\n c) sjekk med programmet <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, og\n d) slå av strømsparing.\n \n Hvis alt dette ikke hjelper, kan du rapportere en feil.</string>
+    <string name="help_support_content">Du kan:\n a) spre info om OpenTracks,\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">foreslå funksjoner</a>,\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportere feil</a>,\n d) hjelpe til med programvareutvikling,\n e) kjøpe programmet i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n f) donere, og\n g) gjøre noe du tror hjelper OpenTracks.</string>
     <string name="description_altitude_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn forhindring av at spor importeres om igjen</string>
@@ -414,7 +394,7 @@ limitations under the License.
     <string name="export_error_post_workout">Eksport etter opptak feilet. Sjekk eksportmappen.</string>
     <string name="export_progress_summary_new_msg">Nye filer eksportert</string>
     <string name="import_progress_summary_ok_msg">Filer importert</string>
-    <string name="import_no_kml_file_found">Ingen doc.kml-fil funnet i KMZ</string>
+    <string name="import_no_kml_file_found">Ingen kml-fil funnet i KMZ</string>
     <string name="export_progress_summary_overwrite_msg">Filer overskrevet</string>
     <string name="export_progress_summary_skip_msg">Filer hoppet over</string>
     <string name="export_progress_summary_errors_msg">Feil</string>
@@ -455,7 +435,7 @@ limitations under the License.
     <string name="field_set_secondary">Sekundær</string>
     <string name="field_remove_from_layout">Fjern</string>
     <string name="settings_announcements_totaltime_frequency">Tidsintervall</string>
-    <string name="settings_announcements_distance_frequency">Distanseintervall</string>
+    <string name="settings_announcements_distance_frequency">Rundelengde</string>
     <string name="permission_bluetooth_failed">OpenTracks krever tillatelse til å bruke Blåtann.</string>
     <string name="permission_bluetooth_failed_rejected">Du må manuelt gi OpenTracks tilgang til «enheter i nærheten» i systeminnstillingene.</string>
     <string name="settings_generic_sensor">Generisk</string>
@@ -470,16 +450,15 @@ limitations under the License.
     <string name="stats_clock">Klokke</string>
     <string name="settings_defaults_summary">Foretrukne enheter, forvalgsaktivitet, forvalgt spornavn</string>
     <string name="settings_sensors_summary">Sykkelsensorer, hjulomkrets, løpesensorer</string>
-    <string name="settings_open_tracks_summary">Alt om OpenTracks-prosjektet</string>
     <string name="settings_defaults_title">Forvalgsenheter og aktivitet</string>
     <string name="settings_ui_title">Brukerflate</string>
     <string name="settings_ui_summary">Utseende, opptakstilpasning, drakt</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Tidsintervall, distanseintervall, maks, distanse, nøyaktighet</string>
-    <string name="settings_sensors_title">Blåtannssensorer</string>
+    <string name="settings_sensors_title">Sensorer</string>
     <string name="settings_announcements_statistics_title">Statistikkmeldinger</string>
     <string name="settings_announcements_summary">Tid, distanse, talehastighet</string>
-    <string name="settings_import_export_title">Import/eksport</string>
+    <string name="settings_import_export_title">Import og eksport</string>
     <string name="settings_import_export_summary">Import, eksport, auto-eksport</string>
     <string name="settings_units_category">Enheter</string>
     <string name="settings_activity_defaults_category">Aktivitetens forvalg</string>
@@ -530,8 +509,6 @@ limitations under the License.
     <string name="error_crash_title">%1$s krasjet</string>
     <string name="share_crash_report">Del krasjrapport</string>
     <string name="report_bug">Rapporter feil</string>
-    <string name="select_show_on_map_behavior">Velg virkemåte for «Vis på kart»</string>
-    <string name="show_on_map_format_ask">Spør</string>
     <string name="show_on_dashboard">OpenTracks-API for oversikten</string>
     <string name="always">Alltid</string>
     <string name="settings_announcements_average_heart_rate">Gjennomsnittlig puls</string>
@@ -550,7 +527,7 @@ limitations under the License.
     <string name="value_float_knots">%1$.1f knop</string>
     <string name="value_float_knots_recommended">%1$.1f knop (anbefales)</string>
     <string name="voice_per_nautical_mile">per nautisk mil</string>
-    <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks-API for oversikten er installert.</string>
+    <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks Dashboard-API er installert.</string>
     <string name="track_delete_number_of_tracks">%1$d spor</string>
     <string name="settings_public_api_package_title">Pakkenavn for offentlig API</string>
     <string name="introduction_osm_dashboard">OpenTracks sørger ikke selv for kart. Installer OSMDashboard for å vise opptakene dine på et kart.</string>
@@ -580,4 +557,26 @@ limitations under the License.
     <string name="settings_announcements_idle_title">Inaktivitet</string>
     <string name="settings_recording_idle_timeout_title">Inaktivitetsterskel</string>
     <string name="activity_type_kickscooter">sparkesykkel</string>
+    <string name="settings_recording_title">Opptak</string>
+    <string name="settings_ui_dynamic_colors_title">Dynamiske farger</string>
+    <string name="settings_ui_dynamic_colors_summary">Bruk brukerdefinerte dynamiske farger (kun Android 12+; krever manuell omstart)</string>
+    <string name="settings_night_mode_option_night_oled">Natt (OLED-vennlig)</string>
+    <string name="settings_announcements_unit">Distanse/hastighet-enhet</string>
+    <string name="settings_recording_location_distance_summary">%1$s mellom registrerte posisjoner</string>
+    <string name="settings_announcements_lap_power">Runde-kraft</string>
+    <string name="power_x_watt">Kraft {x, plural, =1 {1 watt} other {# watt} }</string>
+    <string name="power">Kraft</string>
+    <string name="settings_theme_switch_restart">Temaendringer kan kreve en manuell omstart.</string>
+    <string name="value_internal_sensor">Intern sensor</string>
+    <string name="sensor_state_pressure">Barometer</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtrer Bluetooth-enheter</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Vis alle Bluetooth-enheter som kan oppdages</string>
+    <string name="permission_recording_failed">OpenTracks krever tillatelse for å få tilgang til posisjonen din samt enheter i nærheten.</string>
+    <string name="create_marker_error">Klarte ikke å opprette en markør. Prøv igjen.</string>
+    <string name="settings_locale_title">Språk</string>
+    <string name="settings_locale_system_default">Systemstandard</string>
+    <string name="stats_gain_loss">Total stigning og nedstigning</string>
+    <string name="lap_heart_rate">Runde-puls</string>
 </resources>

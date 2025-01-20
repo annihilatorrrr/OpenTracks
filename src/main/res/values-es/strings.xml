@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">Acerca de OpenTracks</string>
+    <string name="about_preference_title">Acerca de</string>
     <string name="about_description"><i> OpenTracks </i> es una aplicación de seguimiento deportivo que respeta completamente su privacidad.</string>
     <string name="about_url">Página web del proyecto: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nombre de la versión: %1$s</string>
@@ -37,12 +37,12 @@ limitations under the License.
     <string name="help_storage_pictures_title">¿Cómo almacena OpenTracks las imágenes que se tomaron como marcadores\?</string>
     <string name="help_storage_pictures_content">Estos se almacenan en el almacenamiento interno de la aplicación (es decir, solo se puede acceder a ellos dentro de OpenTracks).</string>
     <string name="help_track_export_title">¿Cómo puedo exportar/compartir recorridos grabados\?</string>
-    <string name="help_track_export_content"> Los recorridos se pueden exportar desde la configuración como KMZ, KML o GPX. KMZ / KML todos los datos; para GPX solo ubicaciones. Los recorridos compartidos a través del <i> icono de compartir </i> se comparten como KMZ. </string>
+    <string name="help_track_export_content"> Las pistas se pueden exportar desde la configuración como KMZ, KML o GPX. KMZ/KML todos los datos; Ubicaciones solo GPX. Las pistas compartidas a través del <i>icono de compartir</i> se comparten como KMZ. </string>
     <string name="help_data_google_play_services_title">¿OpenTracks requiere/usa los servicios de Google Play\?</string>
     <string name="help_recording_title">¿Cómo registra OpenTracks los datos?</string>
     <string name="help_recording_content">OpenTracks utiliza el sensor GPS del dispositivo para registrar la ubicación de forma continua. Si el dispositivo GPS informa datos inexactos (por ejemplo, ubicación, velocidad, elevación), OpenTracks no puede hacer nada al respecto.</string>
     <string name="help_data_storage_title">¿Cómo almacena OpenTracks los datos de los sensores?</string>
-    <string name="help_data_storage_content"> Los datos del sensor se almacenan por ubicación registrada. En términos de sensor de frecuencia cardíaca, esto significa que solo se almacena <i> una </i> medición de frecuencia cardíaca por ubicación. Si está parado o está adentro, no se registrarán los datos del sensor (pero se mostrarán). </string>
+    <string name="help_data_storage_content"> Los datos del sensor se almacenan por ubicación registrada. En términos de un sensor de frecuencia cardíaca, esto significa que solo se almacena <i>una</i> medición de frecuencia cardíaca por ubicación. Si está parado o está en interiores, no se registrarán los datos del sensor (pero se mostrarán). </string>
     <string name="help_gps_troubleshooting_title">¿OpenTracks no registra ubicaciones\?</string>
     <string name="help_gps_troubleshooting_content"> Lo que puedes hacer:
 \na) compruebe si el GPS está habilitado,
@@ -236,7 +236,7 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantener la pantalla encendida</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Mientras graba, mantener la pantalla encendida.</string>
     <string name="settings_recording_default_activity_title">Tipo de actividad predeterminada</string>
-    <string name="settings_recording_location_frequency_summary">%1$s entre las ubicaciones grabadas</string>
+    <string name="settings_recording_location_frequency_summary">%1$s entre las comprobaciones de ubicación</string>
     <string name="settings_recording_max_recording_distance_summary">Se crea un nuevo tramo si la distancia entre dos ubicaciones es superior a %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distancia máxima</string>
     <string name="settings_recording_min_recording_distance_title">Intervalo de distancia</string>
@@ -466,7 +466,7 @@ limitations under the License.
     <string name="export_progress_summary_errors_msg">Errores</string>
     <string name="generic_open_track">Abrir recorrido</string>
     <string name="import_progress_summary_exists_msg">Ya existe</string>
-    <string name="import_no_kml_file_found">No se ha encontrado ningún archivo doc.kml en KMZ</string>
+    <string name="import_no_kml_file_found">No se ha encontrado ningún archivo kml en KMZ</string>
     <string name="import_prevent_reimport">Ha configurado evitar la reimportación del recorrido</string>
     <string name="track_distance_notification">Distancia: %1$s</string>
     <string name="track_speed_notification">Velocidad: %1$s</string>
@@ -478,7 +478,7 @@ limitations under the License.
     <string name="settings_sensor_cycling_distance_speed">Distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Cadencia</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
-    <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
+    <string name="settings_announcements_distance_frequency">Longitud de la vuelta</string>
     <string name="stats_sensors_heart_rate">Frecuencia cardiaca</string>
     <string name="stats_sensors_cadence">Cadencia</string>
     <string name="stats_sensors_power">Poder</string>
@@ -513,14 +513,14 @@ limitations under the License.
     <string name="generic_yesterday">Ayer</string>
     <string name="menu_add_custom_layout">Nuevo diseño</string>
     <string name="settings_sensors_summary">Sensores de ciclismo, Circunferencia de la rueda, Sensores de carrera</string>
-    <string name="settings_sensors_title">Sensores Bluetooth</string>
+    <string name="settings_sensors_title">Sensores</string>
     <string name="settings_gps_summary">Intervalo de tiempo, Intervalo de distancia, Distancia máxima, Precisión</string>
     <string name="settings_ui_title">Interfaz de usuario</string>
     <string name="settings_ui_summary">Apariencia, Diseño de grabación, Tema</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_announcements_statistics_title">Avisos de voz</string>
     <string name="settings_units_category">Unidades</string>
-    <string name="settings_import_export_title">Importar/Exportar</string>
+    <string name="settings_import_export_title">Importar y exportar</string>
     <string name="stats_custom_layout_default_layout">Diseño predeterminado</string>
     <string name="custom_layout_select_layout">Seleccionar diseño</string>
     <string name="custom_layout_list_edit_already_exists">El nombre de este diseño ya existe</string>
@@ -540,7 +540,6 @@ limitations under the License.
     <string name="settings_activity_defaults_category">Prederminados de la actividad</string>
     <string name="settings_announcements_summary">Tiempo, Distancia, Velocidad de la voz</string>
     <string name="settings_sensor_bluetooth_service_filter_on">Mostrar sólo los dispositivos Bluetooth que anuncian los servicios requeridos</string>
-    <string name="settings_open_tracks_summary">Todo sobre el proyecto OpenTracks</string>
     <string name="settings_defaults_title">Unidades y Actividad predeterminadas</string>
     <string name="settings_defaults_summary">Unidades preferidas, Actividad predeterminada, Nombre predeterminado del recorrido</string>
     <string name="generic_undo">Deshacer</string>
@@ -601,7 +600,6 @@ limitations under the License.
     <string name="voice_per_nautical_mile">por milla náutica</string>
     <string name="error_crash_title">%1$s falló</string>
     <string name="report_bug">Reportar error</string>
-    <string name="show_on_map_format_ask">Preguntar</string>
     <string name="show_on_dashboard">Panel de control del API de OpenTracks</string>
     <string name="show_on_dashboard_not_installed">No se ha instalado ninguna aplicación compatible con el panel de control del API de OpenTracks.</string>
     <string name="always">Siempre</string>
@@ -622,7 +620,6 @@ limitations under the License.
         other {{n,number,#.0} millas náuticas}
         }
     </string>
-    <string name="select_show_on_map_behavior">Seleccionar el comportamiento de \"mostrar en el mapa\"</string>
     <string name="introduction_osm_dashboard">OpenTracks en sí no proporciona un mapa. Por favor, instale OSMDashboard para ver sus grabaciones en un mapa.</string>
     <string name="share_crash_report">Compartir informe de fallo</string>
     <string name="settings_stats_units_imperial_meter">Imperial (millas, metros)</string>
@@ -649,4 +646,22 @@ limitations under the License.
     <string name="settings_recording_title">Grabando</string>
     <string name="settings_ui_dynamic_colors_summary">Utilizar colores dinámicos definidos por el usuario (sólo Android 12+; requiere un reinicio manual)</string>
     <string name="permission_recording_failed">OpenTracks requiere permiso para acceder a su ubicación y a los dispositivos cercanos.</string>
+    <string name="sensor_state_pressure">Barómetro</string>
+    <string name="value_internal_sensor">Sensor interno</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_recording_min_sampling_interval_title">Intervalo de muestreo</string>
+    <string name="settings_recording_location_distance_summary">%1$s entre lugares registrados</string>
+    <string name="settings_theme_switch_restart">Los cambios del tema pueden requerir un reinicio manual.</string>
+    <string name="settings_night_mode_option_night_oled">Oscuro (compatible con OLED)</string>
+    <string name="settings_announcements_unit">Unidad de distancia/velocidad</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="settings_announcements_lap_power">Potencia por vuelta</string>
+    <string name="power_x_watt">Potencia {x, plural, =1 {1 vatio} otros {# vatios} }</string>
+    <string name="create_marker_error">No se ha podido crear un marcador. Inténtelo de nuevo.</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power">Potencia</string>
+    <string name="settings_locale_title">Idioma</string>
+    <string name="settings_locale_system_default">Predeterminado del sistema</string>
+    <string name="stats_gain_loss">Ganancia y pérdida</string>
 </resources>

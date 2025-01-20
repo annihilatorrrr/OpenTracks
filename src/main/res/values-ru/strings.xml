@@ -352,7 +352,7 @@ limitations under the License.
     <string name="import_file_imported">Файл %1$s импортирован</string>
     <string name="import_error_list_dialog_title">Файлы не импортированы</string>
     <string name="import_error_info">%1$s: %2$s</string>
-    <string name="import_no_kml_file_found">Файл doc.kml не найден в KMZ</string>
+    <string name="import_no_kml_file_found">Файл kml не найден в KMZ</string>
     <string name="import_unable_to_import_file">Невозможно импортировать файл: %1$s</string>
     <string name="import_parser_error">Ошибка обработки: %1$s</string>
     <string name="import_unsupported_format">Неподдерживаемый формат файла</string>
@@ -449,9 +449,9 @@ limitations under the License.
     <string name="menu_filter">Фильтр</string>
     <string name="permission_bluetooth_failed">OpenTracks требуется разрешение на использование Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Вам нужно вручную разрешить OpenTracks доступ к информации об устройствах поблизости в настройках системы.</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Интервал времени, интервал расстояния, макс. расстояние, точность</string>
-    <string name="settings_sensors_title">Bluetooth-датчики</string>
+    <string name="settings_sensors_title">датчики</string>
     <string name="settings_sensors_summary">Велосипедные датчики, окружность колеса, датчики для бега</string>
     <string name="settings_announcements_statistics_title">Голосовые подсказки статистические</string>
     <string name="settings_import_export_title">Импорт/экспорт</string>
@@ -466,7 +466,6 @@ limitations under the License.
     <string name="settings_public_api_enabled_summary_off">Только OpenTracks может запускать и останавливать запись.</string>
     <string name="value_float_mile_hour_recommended">%1$.1f миль/ч (рекомендуется)</string>
     <string name="export_cannot_write_to_dir">Невозможно записать в папку экспорта.</string>
-    <string name="settings_open_tracks_summary">Всё о проекте OpenTracks</string>
     <string name="settings_defaults_summary">Предпочитаемые единицы, вид активности и название трека по умолчанию</string>
     <string name="settings_recording_customize_layout_title">Изменить раскладку записи</string>
     <string name="settings_recording_customize_layout_select_columns">Ячеек с данными в строке</string>
@@ -545,8 +544,6 @@ limitations under the License.
     <string name="value_float_knots_recommended">%1$.1f узла (рекомендуется)</string>
     <string name="settings_announcements_average_heart_rate">Средний пульс</string>
     <string name="settings_stats_units_nautical">Морская система (морские мили, футы)</string>
-    <string name="select_show_on_map_behavior">Выберите действие для \"Показать на карте\"</string>
-    <string name="show_on_map_format_ask">Спрашивать</string>
     <string name="always">Всегда</string>
     <string name="voice_per_nautical_mile">за морскую милю</string>
     <string name="settings_announcements_average_speed_pace">Средняя скорость/темп</string>

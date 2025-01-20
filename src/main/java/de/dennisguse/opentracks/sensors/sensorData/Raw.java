@@ -2,15 +2,21 @@ package de.dennisguse.opentracks.sensors.sensorData;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
+import java.time.Clock;
 import java.time.Instant;
 
-public record Raw<T extends Record>(
-        @NonNull T value,
-
-        @NonNull Instant time
+public record Raw<T>(
+        @NonNull Instant time,
+        @NonNull T value
 ) {
-    public Raw(@NonNull T value) {
-        this(value, Instant.now()); //TODO We should be using the MonotonicClock
+    public Raw(@NonNull Clock clock, @NonNull T value) {
+        this(clock.instant(), value);
+    }
+
+    @VisibleForTesting
+    public Raw(@NonNull String time, @NonNull T value) {
+        this(Instant.parse(time), value);
     }
 }

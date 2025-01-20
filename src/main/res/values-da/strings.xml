@@ -16,7 +16,7 @@ limitations under the License.
 --><resources>
     <string name="about_preference_title">Om OpenTracks</string>
     <string name="about_description"><i> OpenTracks </i> er en sportstracker, der fuldt ud respekterer dit privatliv.</string>
-    <string name="about_url">Projekthjemmeside: <a href="%1$s">%1$s</a></string>
+    <string name="about_url">Projektets hjemmeside: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Versionsnavn: %1$s</string>
     <string name="about_version_code">Versionskode: %1$d</string>
     <string name="about_history">OpenTracks er en forgrening fra <a href="https://code.google.com/archive/p/mytracks/"> <i> Googles MyTracks </i> </a> (afviklet i 2016).</string>
@@ -390,7 +390,7 @@ limitations under the License.
     <string name="export_track_errors">Filer ikke eksporteret</string>
     <string name="gps_disabled_msg">GPS deaktiveret</string>
     <string name="gps_fixed_and_ready">GPS fastsat og klar</string>
-    <string name="import_no_kml_file_found">Ingen doc.kml-fil fundet i KMZ</string>
+    <string name="import_no_kml_file_found">Ingen kml-fil fundet i KMZ</string>
     <string name="sensor_state_cadence_avg">Gns. kadence</string>
     <string name="sensor_state_cadence_max">Maks. kadence</string>
     <string name="sensor_state_heart_rate_avg">Gns. Puls</string>
@@ -443,7 +443,6 @@ limitations under the License.
     <string name="generic_today">I dag</string>
     <string name="generic_yesterday">I går</string>
     <string name="menu_filter">Filter</string>
-    <string name="settings_open_tracks_summary">Alt om OpenTracks-projektet</string>
     <string name="settings_defaults_title">Standardenheder og aktivitet</string>
     <string name="settings_defaults_summary">Foretrukne enheder, standardaktivitet, standardspornavn</string>
     <string name="settings_gps_summary">Tidsinterval, distanceinterval, maksimal afstand, nøjagtighed</string>
@@ -470,7 +469,7 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">Kan ikke skrive til eksportmappen.</string>
     <string name="export_dir_not_writable">" (ikke skrivbar!)"</string>
     <string name="menu_add_custom_layout">Nyt layout</string>
-    <string name="settings_sensors_title">Bluetooth-sensorer</string>
+    <string name="settings_sensors_title">Sensorer</string>
     <string name="stats_custom_layout_default_layout">Standardlayout</string>
     <string name="custom_layout_select_layout">Vælg layout</string>
     <string name="settings_running_sensor">Kører</string>
@@ -482,7 +481,7 @@ limitations under the License.
     <string name="generic_to">Til</string>
     <string name="generic_from">Fra</string>
     <string name="settings_ui_title">Brugergrænseflade</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_activity_defaults_category">Aktivitetens standardværdier</string>
     <string name="settings_units_category">Enheder</string>
     <string name="settings_layout_reset_done">Alle opsætningsindstillinger er blevet tilbageført til standardværdierne</string>

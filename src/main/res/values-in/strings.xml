@@ -273,10 +273,7 @@
     <string name="about_libraries">Pustaka</string>
     <string name="help_feature_title">OpenTracks memiliki fitur-fitur berikut:</string>
     <string name="about_version_name">Nama Versi: %1$s</string>
-    <string name="help_track_map_content">" Gunakan ikon peta kecil.
-\n a) (pembaruan langsung) Instal &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt;. Ini menyediakan peta online atau offline melalui &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt;.
-\n  Sebenarnya, OSMDashboard adalah aplikasi terpisah yang hanya dapat mengakses (sementara) data trek yang akan ditampilkan.
-\n b) Melalui aplikasi peta biasa (misalnya, &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; dan &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Aplikasi ini harus mendukung format file KMZ (hanya lokasi dan stempel waktu). Bahkan, aplikasi perlu mendukung &lt;i&gt;ACTION_VIEW&lt;/i&gt; dengan MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt;. "</string>
+    <string name="help_track_map_content">" Gunakan ikon peta kecil.\n\n a) (pembaruan langsung) Instal &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt;. Ini menyediakan peta online atau offline melalui &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt;.\n\n  Sebenarnya, OSMDashboard adalah aplikasi terpisah yang hanya dapat mengakses (sementara) data trek yang akan ditampilkan.\n\n b) Melalui aplikasi peta biasa (misalnya, &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; dan &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Aplikasi ini harus mendukung format file KMZ (hanya lokasi dan stempel waktu). Bahkan, aplikasi perlu mendukung &lt;i&gt;ACTION_VIEW&lt;/i&gt; dengan MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt;. "</string>
     <string name="help_feature_content">* Buat trek GPS
 \n* Gunakan sensor denyut jantung (satu-satunya le Bluetooth)
 \n* suara pengumuman (oleh waktu atau jarak)
@@ -293,7 +290,6 @@
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="bluetooth_disabled">Silahkan aktifkan Bluetooth.</string>
     <string name="sensor_state_heart_rate_avg">Detak Jantung rata-rata</string>
-    <string name="settings_open_tracks_summary">Semua Tentang Proyek OpenTracks</string>
     <string name="sensor_could_not_scan">Tidak dapat memindai perangkat Bluetooth (error %1$i).</string>
     <string name="settings_announcements_idle_category_title">Pengumuman Idle</string>
     <string name="sensor_state_power_unit">W</string>
@@ -302,8 +298,8 @@
     <string name="settings_import_export_summary">Impor, Ekspor, Ekspor Otomatis</string>
     <string name="sensor_state_power_max">Tenaga Maks</string>
     <string name="settings_ui_title">Antarmuka Pengguna</string>
-    <string name="settings_sensors_title">Sensor Bluetooth</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_sensors_title">Sensor</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_activity_defaults_category">Default Aktivitas</string>
     <string name="settings_ui_summary">Penampilan, Tata letak perekaman, Tema</string>
     <string name="settings_announcements_statistics_title">Pengumuman Statistik</string>
@@ -313,4 +309,17 @@
     <string name="settings_gps_summary">Interval waktu, interval jarak, jarak maks, akurasi</string>
     <string name="settings_units_category">Unit</string>
     <string name="settings_announcements_idle_title">Siaga</string>
+    <string name="sensor_state_heart_rate_max">Denyut jantung maksimal</string>
+    <string name="sensor_state_pressure">Barometer</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="menu_add_custom_layout">Tata letak baru</string>
+    <string name="sensor_state_cadence_avg">Rata-rata Irama</string>
+    <string name="menu_resume_track">Melanjutkan trek</string>
+    <string name="menu_voice_rate">Kecepatan suara</string>
+    <string name="menu_filter">Saring</string>
+    <string name="sensor_state_cadence_max">Irama Maks</string>
+    <string name="permission_gps_failed">OpenTracks memerlukan izin untuk menggunakan GPS.</string>
+    <string name="permission_bluetooth_failed">OpenTracks memerlukan izin untuk menggunakan Bluetooth.</string>
+    <string name="permission_recording_failed">OpenTracks memerlukan izin untuk mengakses lokasi Anda serta perangkat terdekat.</string>
+    <string name="permission_bluetooth_failed_rejected">Anda harus memberikan akses OpenTracks ke Perangkat Terdekat secara manual dalam pengaturan sistem.</string>
 </resources>
